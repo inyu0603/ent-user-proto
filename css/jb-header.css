@@ -1,0 +1,336 @@
+/* ══════════════════════════════════════════════════════════════════════
+   잡아바 공통 헤더 (유틸바 · 로고 · GNB 2Depth · 통합검색 버튼 · 전체메뉴 드로어)
+   ----------------------------------------------------------------------
+   출처 : 03_화면설계/design (디자인 정본) — 2026-10-01 원문 그대로 이식
+          · 토큰    = css/tokens.css  :root 블록 2개
+          · 기본    = css/base.css     [hidden] · .jb-sr-only · .jb-container
+          · 아이콘  = css/components.css .jb-ico · .jb-ico--external
+          · 헤더    = css/page-main.css 「추출 아이콘」~「Header」·「드로어」 블록 + 「헤더 전환점 1260」 블록
+   주의 : 정본이 바뀌면 이 파일을 다시 추출한다(직접 수정 금지).
+          기업서비스 본문은 pds.css(그레이스케일) — 헤더만 운영 공통 디자인(정본 색상)을 따른다.
+   ══════════════════════════════════════════════════════════════════════ */
+@import url("../assets/fonts/paperlogy/paperlogy.css");
+
+/* ── 토큰 ── */
+:root,
+.jb-root{
+  /* ── Brand ─────────────────────────────────────────────────────── */
+  --jb-brand:        #00AAA5;   /* Primary · CTA · 강조 */
+  --jb-brand-hover:  #00908C;
+  --jb-brand-deep:   #00726C;   /* pressed · 짙은 배경 */
+  --jb-brand-darker: #005B56;
+  --jb-brand-light:  #38BAB2;   /* 게이지·프로그레스 */
+  --jb-brand-soft:   #8BD3D2;   /* 옅은 테두리 (로그인 CTA 2px) */
+  --jb-brand-weak:   #E2F4F5;   /* 옅은 면 · 배지 · 선택 상태 */
+
+  /* ── Accent (시안 고유) ───────────────────────────────────────────── */
+  --jb-hero-bg:      #00A6CA;   /* 히어로 메인 배너 배경 (브랜드 틸과 혼용 금지) */
+  --jb-on-hero-20:   rgba(255,255,255,.2);  /* 히어로 위 배지·슬라이드 버튼 면 */
+  --jb-on-hero-32:   rgba(255,255,255,.32); /* 슬라이드 버튼 hover */
+  --jb-util-brand:   #003282;   /* 유틸바 '러닝센터·잡아바 어플라이' */
+  --jb-util-link:    #000000;   /* 유틸바 일반 링크 — 운영 실측은 #585858 이나 가독성 위해 #000 (2026-09-04 지시) */
+
+  /* 유틸바 pill — 운영(job.gg.go.kr .topMenu ul.left) computed 실측 */
+  --jb-util-lms-bg:    #EDEFF6;   --jb-util-lms-ink:   #000000;   /* 러닝센터 */
+  --jb-util-apply-bg:  #E2F4F5;   --jb-util-apply-ink: #2E919A;   /* 잡아바 어플라이 */
+  --jb-util-map-bg:    #E5F1FC;   --jb-util-map-ink:   #5589E1;   /* 일자리맵 */
+  --jb-util-biz-bg:    #EDEFF6;   --jb-util-biz-ink:   #000000;   /* 기업서비스 — 운영 미존재, 전용 색상 확정 필요 */
+
+  /* ── Ink ─────────────────────────────────────────────────────────── */
+  --jb-ink:          #222222;   /* 제목·강조 */
+  --jb-ink-strong:   #111111;
+  --jb-inverse:      #333333;   /* 선택 칩 배경 · 준강조 텍스트 */
+  --jb-body:         #4E4E4E;   /* 본문 */
+  --jb-muted:        #666666;   /* 설명 · 링크 라벨 */
+  --jb-muted-weak:   #777777;   /* 완료 상태 등 저강조 */
+  --jb-disabled:     #999999;
+  --jb-ctrl-muted:   #B3B3B3;   /* 서브 슬라이드 화살표·정지 */
+  --jb-on-brand:     #FFFFFF;
+  --jb-on-inverse:   #FFFFFF;
+
+  /* ── Surface ─────────────────────────────────────────────────────── */
+  --jb-surface:      #FFFFFF;   /* 카드 */
+  --jb-bg:           #FFFFFF;   /* 페이지 */
+  --jb-bg-section:   #F4F6F8;   /* 섹션 구분 · 추천 카드 */
+  --jb-bg-subtle:    #F5F5F5;   /* 배너박스 · 퀵 · 배지 */
+  --jb-bg-summary:   #F8F8F8;   /* 마이페이지 요약 */
+  --jb-bg-hover:     #EEEEEE;   /* 흰 배경 위 칩 · 퀵의 호버 면 (D42 — 종전 #ECECEC 하드코딩) */
+  --jb-th-bg:        #FAFCFC;   /* 테이블 헤더 (운영 실측) */
+  --jb-footer-bg:    #222222;
+  --jb-footer-text:  #909090;
+  --jb-footer-copy:  #595959;
+  --jb-footer-sns:   #4E4E4E;
+
+  /* ── Border ──────────────────────────────────────────────────────── */
+  --jb-border:       #DDDDDD;   /* 기본 구분선·카드 테두리 (시안 실측) */
+  --jb-border-weak:  #EEEEEE;   /* AI 매칭 박스 · 게이지 트랙 */
+  --jb-border-soft:  #E9EEF0;   /* 프로그레스 트랙 (운영 실측) */
+  --jb-divider-on-brand: rgba(255,255,255,.5);
+  --jb-on-brand-10:  rgba(255,255,255,.1);
+  --jb-on-brand-20:  rgba(255,255,255,.2);
+
+  /* ── Status ──────────────────────────────────────────────────────── */
+  --jb-danger:       #E60012;
+  --jb-warning:      #EF9F27;
+  --jb-warning-ink:  #B45309;
+  --jb-warning-weak: #FEF3C7;
+  --jb-danger-weak:  #FDECEC;   /* 경고 배지 약배경 — 마이페이지 자료보완 (D42) */
+  --jb-danger-line:  #F6C9C9;   /* 경고 카드 테두리 (D42 — 종전 page-mypage.css 하드코딩) */
+  --jb-success:      #2E9992;
+  --jb-success-weak: #F4FFF9;
+
+  /* ── Typography ──────────────────────────────────────────────────── */
+  --jb-font-display: "Paperlogy", "Noto Sans KR", -apple-system, sans-serif;   /* 제목·버튼·링크·칩 */
+  --jb-font-body:    "Noto Sans KR", -apple-system, sans-serif;                 /* 본문·표·폼 */
+
+  --jb-fs-hero:    40px;  /* 히어로 제목 */
+  --jb-fs-display: 36px;  /* 섹션 타이틀 */
+  --jb-fs-h2:      28px;
+  --jb-fs-stat:    26px;  /* 우측 패널 지표 숫자 */
+  --jb-fs-mystat:  32px;  /* 마이페이지 요약 지표 숫자 (시안 293:222 실측 h39) */
+  --jb-fs-h3:      24px;  /* 박스 타이틀 · 콘텐츠 카드 제목 */
+  --jb-fs-h4:      22px;  /* 카드 타이틀 · 게이지 숫자 */
+  --jb-fs-lg:      20px;
+  --jb-fs-md:      18px;  /* GNB · 푸터 링크 · 항목명 */
+  --jb-fs-base:    16px;
+  --jb-fs-sm:      14px;
+  --jb-fs-xs:      13px;
+  --jb-fs-2xs:     12px;
+
+  --jb-lh-tight:   1.3;   /* 시안 전역 기본 */
+  --jb-lh-base:    1.6;   /* 긴 본문 */
+  --jb-lh-display: 47px;  /* 36px 타이틀 실측 행높이 (반올림 오차 방지) */
+
+  --jb-fw-regular: 400;
+  --jb-fw-medium:  500;
+  --jb-fw-semibold:600;
+  --jb-fw-bold:    700;
+
+  /* ── Shape ───────────────────────────────────────────────────────── */
+  --jb-r-card: 20px;   /* 카드·박스·퀵 */
+
+  /* 히어로 배너 이미지 하단 돌출량 : 원본 44px @4x = 11px (파란 면 420 기준) */
+  --jb-hero-bleed: 11px;
+  --jb-r-box:  12px;   /* 중형 블록 · AI 매칭 항목 */
+  --jb-r-btn:  8px;    /* 사각 버튼 · 지표 행 */
+  --jb-r-sm:   4px;    /* 배지 */
+  --jb-r-pill: 999px;  /* pill 버튼·칩·태그 */
+
+  /* ── Size ────────────────────────────────────────────────────────── */
+  --jb-icon-card:  42px;   /* 여정 카드 아이콘 (시안 30 → 42 확대 · 2026-09-04) */
+  --jb-icon-quick: 60px;   /* 퀵서비스 원형 */
+  --jb-btn-h:      41px;   /* pill 버튼·칩 */
+  --jb-btn-h-sm:   30px;
+  --jb-btn-h-rect: 50px;   /* 사각 CTA */
+  --jb-ctrl:       26px;   /* 히어로 슬라이드 버튼 */
+  --jb-gauge:      100px;
+
+  /* ── Form · List (2026-09-04 · 목록/상세/폼 카탈로그) ─────────────── */
+  --jb-input-h:      46px;   /* 인풋·셀렉트 기본 높이 */
+  --jb-input-h-lg:   52px;   /* 키워드 검색 인풋 */
+  --jb-filter-w:     300px;  /* 목록 좌측 필터 컬럼 — 2열 옵션에 건수까지 한 줄로 들어가는 최소폭 */
+  --jb-detailside-w: 340px;  /* 상세 우측 요약 컬럼 */
+  --jb-mark:         20px;   /* 체크·라디오 마크 */
+  --jb-ring:         0 0 0 3px rgba(0,170,165,.22);
+
+  /* ── Spacing ─────────────────────────────────────────────────────── */
+  --jb-sp-1: 4px;  --jb-sp-2: 6px;  --jb-sp-3: 10px; --jb-sp-4: 16px;
+  --jb-sp-5: 20px; --jb-sp-6: 30px; --jb-sp-7: 40px; --jb-sp-8: 60px;
+  --jb-sp-9: 80px;
+  --jb-gap-grid:   20px;
+  --jb-pad-card:   40px 60px;
+  --jb-pad-section:80px 0;
+
+  /* ── Layout ──────────────────────────────────────────────────────── */
+  --jb-container: 1280px;
+
+  /* ── Elevation · Motion ──────────────────────────────────────────── */
+  --jb-shadow-hover: 0 6px 20px rgba(0,0,0,.08);
+  --jb-ease:     cubic-bezier(.2,0,.2,1);
+  --jb-ease-out: cubic-bezier(.22,1,.36,1);
+  --jb-dur-fast: .15s;
+  --jb-dur-base: .25s;
+  --jb-dur-reveal: .42s;
+}
+:root{
+  --jb-z-mobilebar: 300;     /* 하단 고정 액션 바 — 본문 위 · 헤더와 겹치지 않는다 */
+  --jb-z-drawer:     400;    /* 전체메뉴 드로어 — 하단 바(300) «위» (2026-09-18 D130 · 종전 100 이면 바가 드로어를 뚫는다 · dev 규칙을 정본으로) */
+  --jb-z-header:    9999;    /* 운영 고정 헤더(참조용 · 우리가 정하지 않는다) */
+  --jb-z-dim:      10000;    /* 시트 딤 — 헤더까지 덮는다 */
+  --jb-z-sheet:    10010;    /* 바텀시트 — 가장 위 */
+}
+
+/* ── 기본 프리미티브 ── */
+.jb-root [class^="jb-"], .jb-root [class*=" jb-"],
+.jb-root [class^="jb-"]::before, .jb-root [class^="jb-"]::after{ box-sizing:border-box; }
+[class^="jb-"][hidden], [class*=" jb-"][hidden]{ display:none !important; }
+.jb-sr-only{ position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden;
+             clip:rect(0 0 0 0); white-space:nowrap; border:0; }
+.jb-container{ width:100%; max-width:calc(var(--jb-container) + 40px); margin-inline:auto; padding-inline:20px; }
+
+/* ── 아이콘 ── */
+.jb-ico{ display:inline-block; flex:none; width:20px; height:20px; background-color:currentColor;
+  -webkit-mask-image:var(--jb-ico); mask-image:var(--jb-ico);
+  -webkit-mask-repeat:no-repeat;    mask-repeat:no-repeat;
+  -webkit-mask-position:center;     mask-position:center;
+  -webkit-mask-size:contain;        mask-size:contain; }
+.jb-ico--external{ --jb-ico:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M14 4h6v6'/%3E%3Cpath d='M20 4l-8.5 8.5'/%3E%3Cpath d='M18 14v4.5A1.5 1.5 0 0 1 16.5 20h-11A1.5 1.5 0 0 1 4 18.5v-11A1.5 1.5 0 0 1 5.5 6H10'/%3E%3C/svg%3E"); }
+
+/* ── 추출 아이콘 <img> 유틸 (원본 화살표는 ↑ 방향) ───────────────────
+   Figma 내보내기 SVG 는 비율이 제각각이고 preserveAspectRatio="none" 이라
+   그대로 두면 아이콘 슬롯 크기에 맞춰 늘어난다.
+   contain + center 로 비율을 지키면서 슬롯 중앙에 놓는다(신규 아이콘 공통 안전장치). */
+.jb-i{ display:block; width:100%; height:100%; object-fit:contain; object-position:center; }
+.jb-i--r90 { transform:rotate(90deg); }    /* → */
+.jb-i--r270{ transform:rotate(-90deg); }   /* ← */
+
+/* ══ Header ══ 데스크톱 129 = 유틸 45+선 · GNB 82+선 / 1260 이하 모바일 68 ══
+   운영(default_new2025_top.jsp) 상속 : .topMenu = 유틸, nav.newGnb = GNB,
+   1260px 이하에서 둘 다 display:none → m_menu 햄버거 + .h_mobile 드로어  ══════ */
+.jb-header{ position:relative; background:var(--jb-surface); border-bottom:1px solid var(--jb-border); }
+.jb-header__util{ border-bottom:1px solid var(--jb-border); }
+.jb-header__util .jb-container{ display:flex; align-items:center; justify-content:space-between; gap:20px; min-height:45px; }
+
+/* 유틸 좌측 pill — 운영 .topMenu ul.left 실측 :
+   gap 9 · padding 5/40/5/17 · r pill · 14 Medium · ls -1 · 우측 24px 화살표 아이콘 */
+.jb-utilbtns{ display:flex; align-items:center; gap:9px; margin:0; padding:0; list-style:none; }
+.jb-utilbtn{ display:inline-block; padding:5px 40px 5px 17px; border-radius:var(--jb-r-pill);
+  font-weight:var(--jb-fw-medium); font-size:var(--jb-fs-sm); line-height:var(--jb-lh-tight); letter-spacing:-1px;
+  white-space:nowrap; text-decoration:none;
+  background-image:url("../assets/img/icon/ui/circle-arrow.png"); background-repeat:no-repeat; background-position:calc(100% - 5px) 50%; }
+.jb-utilbtn--lms  { background-color:var(--jb-util-lms-bg);   color:var(--jb-util-lms-ink); }
+.jb-utilbtn--apply{ background-color:var(--jb-util-apply-bg); color:var(--jb-util-apply-ink); }
+.jb-utilbtn--map  { background-color:var(--jb-util-map-bg);   color:var(--jb-util-map-ink); }
+.jb-utilbtn--biz  { background-color:var(--jb-util-biz-bg);   color:var(--jb-util-biz-ink); }   /* 전용 색상 미정 — 러닝센터 톤 임시 */
+
+/* 유틸 우측 링크 — 운영 .topMenu ul.right 실측 : gap 5 · li p 0 5 · li::after "|" · a 13 Medium ls -1 */
+.jb-utillinks{ display:flex; align-items:center; gap:5px; margin:0; padding:0; list-style:none; }
+.jb-utillinks li{ display:flex; align-items:center; padding:0 5px; font-size:var(--jb-fs-xs); color:var(--jb-border); }
+.jb-utillinks li:not(:last-child)::after{ content:"|"; margin-left:10px; color:var(--jb-border); font-weight:var(--jb-fw-regular); }
+/* 운영 실측은 13/500 #585858 이지만 가독성이 떨어져 #000 SemiBold 로 올린다(2026-09-04 지시) */
+.jb-utillinks a{ font-weight:var(--jb-fw-semibold); font-size:13px; line-height:var(--jb-lh-tight); letter-spacing:-1px;
+  color:var(--jb-util-link); text-decoration:none; }
+.jb-utillinks a:hover{ color:var(--jb-brand); }
+.jb-utillinks li.jb-utillinks__me{ font-weight:var(--jb-fw-bold); font-size:var(--jb-fs-base); color:var(--jb-util-link); }   /* 2026-09-30 D336 — #000 직접 지정 → 토큰(같은 값 · 명도 대비 모드에서 흰색으로 뒤집히게) */   /* li 규칙(구분자 색)보다 특이도를 올린다 */
+
+.jb-header__main{ display:flex; align-items:center; gap:40px; min-height:82px; }
+.jb-logo{ display:flex; align-items:center; flex:none; width:217px; }
+.jb-logo img{ display:block; width:191px; height:53px; }
+
+/* GNB — 상위 6 × 2Depth. 유닛 hover/focus 시 드롭다운(프로토타입 .gnb__unit 동작 이식) */
+.jb-gnb{ display:flex; align-items:center; gap:40px; margin-left:auto; }
+.jb-gnb__unit{ position:relative; display:flex; align-items:center; }
+.jb-gnb__item{ display:block; padding:29px 0; font-family:var(--jb-font-display); font-weight:var(--jb-fw-semibold);
+  font-size:var(--jb-fs-md); line-height:var(--jb-lh-tight); color:var(--jb-ink); text-decoration:none; white-space:nowrap; }
+/* 🔄 2026-09-23 사용자 지시 — «현재 페이지의 대메뉴»가 활성으로 보이지 않던 문제(운영에도 미반영인 고질적 건).
+   활성 모양은 «마우스 오버와 동일»하게 한다. 모바일 드로어에는 이미 aria-current 규칙이 있었는데
+   데스크톱 GNB 에만 없었다 — 그래서 PC 에서만 현재 위치를 알 수 없었다. */
+.jb-gnb__item:hover,
+.jb-gnb__unit:focus-within .jb-gnb__item,
+.jb-gnb__item[aria-current="page"]{ color:var(--jb-brand); }
+.jb-gnb__sub{ position:absolute; top:100%; left:50%; z-index:30; transform:translateX(-50%);
+  display:flex; flex-direction:column; min-width:160px; padding:12px 0; border-radius:0 0 var(--jb-r-box) var(--jb-r-box);
+  background:var(--jb-surface); box-shadow:var(--jb-shadow-hover);
+  opacity:0; visibility:hidden; transition:opacity var(--jb-dur-fast) var(--jb-ease), visibility var(--jb-dur-fast) var(--jb-ease); }
+.jb-gnb__unit:hover .jb-gnb__sub, .jb-gnb__unit:focus-within .jb-gnb__sub{ opacity:1; visibility:visible; }
+.jb-gnb__sub-item{ padding:9px 20px; font-size:var(--jb-fs-base); line-height:var(--jb-lh-tight); letter-spacing:-.3px;
+  color:var(--jb-muted); text-decoration:none; white-space:nowrap; }
+.jb-gnb__sub-item:hover{ background:var(--jb-bg-subtle); color:var(--jb-brand); }
+
+/* ── 메가메뉴 안 «강조 항목» (2026-09-17 · D76) ─────────────────────────────
+   운영이 2026-09-11 에 「참여소통」 2뎁스 안에 넣은 고정배너(동영상 강의 · 러닝센터 이동)를
+   받는 자리다. 운영은 «full-width 메가메뉴»라 이미지 배너를 놓을 공간이 있었지만,
+   확정 디자인의 2뎁스는 min-width:160px «세로 텍스트 드롭다운»이라 이미지가 들어갈 자리가 아니다.
+   ➡️ 배너의 «강조»를 이미지가 아니라 «면 + 아이콘»으로 옮긴다. 기능(링크)은 그대로 유지한다.
+   ⚠️ 외부(러닝센터)로 나가므로 새 창 + 외부 이동 아이콘을 함께 쓴다. */
+/* 🔴 D324 B14(2026-09-29) — 강조를 «활성 표시와 다른 모양»으로. 종전 = 연한 브랜드 면 + «브랜드 글자 + 세미볼드» 였는데
+   글자 쪽이 «현재 메뉴» 표시(드로어 `.jb-gnb__sub-item[aria-current="page"]` = 브랜드 글자 + 세미볼드 · PC 대메뉴 활성 = 브랜드 글자)와
+   같은 모양이라 늘 활성으로 읽혔다(통합테스트 C-03 ②).
+   ➡️ 글자색 · 굵기는 «기본 하위 메뉴»(.jb-gnb__sub-item = --jb-muted · 400)로 되돌리고,
+      강조는 «연한 면 + 브랜드색 외부 이동 아이콘» 둘만 남긴다. 활성 = 글자색, 강조 = 면·아이콘 — 신호가 겹치지 않는다. PC GNB · 모바일 드로어 공통 */
+.jb-gnb__sub-item--feature{ display:flex; align-items:center; gap:var(--jb-sp-2);
+  margin:var(--jb-sp-2) 12px 0; padding:10px 12px; border-radius:var(--jb-r-btn);
+  background:var(--jb-brand-weak); }
+.jb-gnb__sub-item--feature:hover{ background:var(--jb-brand-weak); color:var(--jb-brand-hover); }
+.jb-gnb__sub-item--feature .jb-ico{ width:14px; height:14px; margin-left:auto; color:var(--jb-brand); }
+
+.jb-search-btn{ flex:none; width:48px; height:48px; padding:12px; border:0; border-radius:50%; background:var(--jb-brand); cursor:pointer; }
+
+/* 햄버거 — 데스크톱 숨김 / 1260 이하 노출 (시안 292:391 = 46×46 원형 테두리) */
+.jb-menu-btn{ display:none; flex:none; width:46px; height:46px; padding:13px 12px; box-sizing:border-box;
+  flex-direction:column; justify-content:space-between; border:1px solid var(--jb-border); border-radius:50%;
+  background:var(--jb-surface); cursor:pointer; }
+.jb-menu-btn span{ display:block; width:100%; height:2px; border-radius:1px; background:var(--jb-inverse); }
+
+/* 전체메뉴 드로어 — main.js 가 GNB 를 복제해 생성.
+   운영 이관 시에는 복제가 아니라 .h_mobile 별도 마크업으로 전개한다. */
+.jb-drawer[hidden]{ display:none; }
+.jb-drawer{ position:fixed; inset:0; z-index:var(--jb-z-drawer); }
+.jb-drawer__backdrop{ position:absolute; inset:0; background:rgba(0,0,0,.45); }
+.jb-drawer__panel{ position:absolute; top:0; right:0; display:flex; flex-direction:column; width:min(320px,86vw); height:100%;
+  background:var(--jb-surface); box-shadow:-8px 0 24px rgba(0,0,0,.12); overflow-y:auto; }
+.jb-drawer__head{ display:flex; align-items:center; justify-content:space-between; flex:none; min-height:68px; padding:0 20px;
+  border-bottom:1px solid var(--jb-border); }
+.jb-drawer__logo{ display:flex; align-items:center; }
+.jb-drawer__logo img{ display:block; width:120px; height:34px; }   /* 모바일 헤더 로고와 동일 규격 */
+.jb-drawer__close{ position:relative; width:36px; height:36px; border:0; background:none; cursor:pointer; }
+.jb-drawer__close::before, .jb-drawer__close::after{ content:""; position:absolute; left:9px; top:17px; width:18px; height:2px; background:var(--jb-inverse); }
+.jb-drawer__close::before{ transform:rotate(45deg); }  .jb-drawer__close::after{ transform:rotate(-45deg); }
+/* 타이틀 아래 : 로그인 링크 + 통합검색 (운영 .h_mobile_login_area + .h_mobile_search_area) */
+.jb-drawer__account{ flex:none; padding:14px 20px 16px; border-bottom:1px solid var(--jb-border-weak); }
+.jb-drawer__account .jb-utillinks{ justify-content:center; }
+.jb-drawer__account .jb-utillinks a{ font-size:var(--jb-fs-sm); }
+
+/* 통합검색 — .jb-drawer__account 안에 위치(좌우 여백은 부모가 담당) */
+.jb-drawer__search{ padding-top:17px; }
+.jb-drawer__search form{ position:relative; }
+.jb-drawer__search input{ width:100%; height:42px; padding:0 52px 0 20px; box-sizing:border-box;
+  border:0; border-radius:var(--jb-r-pill); background:var(--jb-bg-subtle);
+  font-family:inherit; font-size:var(--jb-fs-base); color:var(--jb-ink); }
+.jb-drawer__search input::placeholder{ color:var(--jb-disabled); }
+.jb-drawer__search input:focus{ outline:2px solid var(--jb-brand); outline-offset:-2px; }
+.jb-drawer__search button{ position:absolute; top:50%; right:10px; transform:translateY(-50%);
+  width:32px; height:32px; padding:4px; border:0; background:none; cursor:pointer; }
+/* search.svg 는 stroke:white 라 밝은 배경에서는 반전이 필요하다 */
+.jb-drawer__search button img{ filter:brightness(0) invert(.42); }
+
+/* 메뉴 아코디언 */
+.jb-drawer__body{ flex:none; padding:0; }
+.jb-drawer__body .jb-gnb{ display:block; margin:0; }
+.jb-drawer__body .jb-gnb__unit{ display:block; border-bottom:1px solid var(--jb-border-weak); }
+.jb-drawer__title{ display:flex; align-items:center; justify-content:space-between; gap:8px; }
+.jb-drawer__body .jb-gnb__item{ flex:1 1 auto; padding:16px 8px 16px 20px; font-size:var(--jb-fs-base); }
+.jb-drawer__body .jb-gnb__unit:focus-within .jb-gnb__item{ color:var(--jb-ink); }
+/* 현재 위치 : 대메뉴 + 해당 하위 항목 */
+.jb-drawer__body .jb-gnb__unit.is-current > .jb-drawer__title .jb-gnb__item,
+.jb-drawer__body .jb-gnb__item[aria-current="page"]{ color:var(--jb-brand); }
+.jb-drawer__body .jb-gnb__sub-item[aria-current="page"]{ color:var(--jb-brand); font-weight:var(--jb-fw-semibold); }
+
+.jb-drawer__arrow{ position:relative; flex:none; width:48px; height:52px; border:0; background:none; cursor:pointer; }
+.jb-drawer__arrow::before{ content:""; position:absolute; top:22px; left:18px; width:9px; height:9px;
+  border-right:2px solid var(--jb-muted); border-bottom:2px solid var(--jb-muted); transform:rotate(45deg);
+  transition:transform var(--jb-dur-fast) var(--jb-ease); }
+.jb-drawer__arrow[aria-expanded="true"]::before{ transform:rotate(-135deg); top:26px; }
+
+.jb-drawer__body .jb-gnb__sub{ position:static; transform:none; opacity:1; visibility:visible;
+  min-width:0; padding:4px 0 12px; border-radius:0; background:var(--jb-bg-subtle); box-shadow:none; }
+.jb-drawer__body .jb-gnb__sub[hidden]{ display:none; }
+.jb-drawer__body .jb-gnb__sub-item{ padding:9px 32px; white-space:normal; }
+
+/* 메뉴 바로 아래 : 관련 서비스 pill (운영 .h_mobile_bottom_area — 가운데 정렬·줄바꿈) */
+.jb-drawer__quick{ flex:none; padding:20px; }
+.jb-drawer__quick .jb-utilbtns{ justify-content:center; flex-wrap:wrap; gap:8px 10px; }
+
+/* ── 헤더 전환점 1260 (운영 style.css 와 동일) ────────────────────────
+   이하에서 유틸바·GNB 를 숨기고 헤더를 시안 모바일 규격(68 · 로고 120×34 ·
+   검색 46 · 햄버거 46)으로 바꾼다. Figma 292:363 실측. */
+@media (max-width:1260px){
+  body.is-drawer-open{ overflow:hidden; }
+  .jb-header__util{ display:none; }
+  .jb-header__main > .jb-gnb{ display:none; }
+  .jb-header__main{ gap:10px; min-height:68px; padding-inline:20px; }   /* 시안 292:363 : 로고 x20 */
+  .jb-logo{ width:auto; }
+  .jb-logo img{ width:120px; height:34px; }
+  .jb-search-btn{ width:46px; height:46px; padding:12px; margin-left:auto; }
+  .jb-menu-btn{ display:flex; }
+}

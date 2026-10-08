@@ -1,0 +1,334 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>잡아바 프로토타입 — 기업 마이페이지 · 지원자 상세</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/pds.css">
+<link rel="stylesheet" href="css/jb-header.css"><!-- 상단 헤더 : 디자인 정본 이식 -->
+<link rel="stylesheet" href="css/resume-tpl.css"><!-- 이력서 템플릿 3종 : JOBABA_AI 이식 -->
+<script src="https://unpkg.com/lucide@latest"></script>
+<script src="js/bzm-features.js"></script>
+<script src="js/bzm.js"></script>
+<script src="js/jb-header.js"></script>
+</head>
+<body data-user="biz-member">
+<div id="site-header"></div>
+
+<main class="container section">
+  <p class="crumb"><a href="../../03_화면설계/prototype/main-member-a.html">홈</a> › 기업 마이페이지 › 지원자 관리 › 지원자 상세</p>
+
+  <!-- SCR-BZM-01 진입·권한 (FR-BZM-U29) -->
+  <div class="card ent-card">
+    <div class="ent-card__name"><i data-lucide="building-2"></i><strong class="strong">기업회원 | 잡아바기업</strong>
+      <span class="small muted">사업자번호 123-45-***** · 인사담당자 홍길동</span></div>
+    <span class="badge badge--strong"><i data-lucide="sparkles"></i>인재추천 서비스 이용 기업</span>
+  </div>
+
+  <div class="mp">
+    <nav class="lnb" aria-label="기업 마이페이지 메뉴">
+      <p class="lnb__title">기업 마이페이지</p>
+      <a class="lnb__link" href="bzm-recruit-list.html">채용공고 관리</a>
+      <a class="lnb__link" href="bzm-applicants.html" aria-current="page">지원자 관리</a>
+      <a class="lnb__link" href="bzm-talent.html">인재추천</a>
+    </nav>
+
+    <section aria-labelledby="pg-t">
+      <div class="page-head">
+        <h1 id="pg-t">지원자 상세</h1>
+      </div>
+
+      <!-- ① 지원 정보 -->
+      <div class="card job-head">
+        <div>
+          <p class="strong" style="font-size:var(--fs-20)">김민수 <span class="small muted" style="font-weight:400">남 · 30세 · 지원번호 S2609-0081</span></p>
+          <p class="small muted" style="margin-top:4px">반도체 공정기술 엔지니어 채용 · 지원일 2026-09-27</p>
+        </div>
+        <span class="badge badge--strong"><i data-lucide="send"></i>경로 : 제안 (매칭 요청 후 입사지원)</span>
+      </div>
+
+      <!-- ② 전형결과 처리 (FR-BZM-U22) : 공고 현재 단계(서류전형)만 활성 -->
+      <h2 class="h-sub">전형결과</h2>
+      <div class="rslt">
+        <fieldset class="rslt__col is-current">
+          <legend class="sr-only">서류전형 결과</legend>
+          <h4>서류전형 <span class="badge badge--solid">현재 단계</span></h4>
+          <div class="choice">
+            <label><input type="radio" name="doc" checked> 미확인</label>
+            <label><input type="radio" name="doc"> 보류</label>
+            <label><input type="radio" name="doc"> 합격</label>
+            <label><input type="radio" name="doc"> 불합격</label>
+          </div>
+        </fieldset>
+        <fieldset class="rslt__col is-lock" disabled>
+          <legend class="sr-only">면접전형 결과 (비활성)</legend>
+          <h4>면접전형 <i data-lucide="lock"></i></h4>
+          <div class="choice"><label><input type="radio" name="itv" checked> 미확인</label><label><input type="radio" name="itv"> 보류</label><label><input type="radio" name="itv"> 합격</label><label><input type="radio" name="itv"> 불합격</label></div>
+        </fieldset>
+        <fieldset class="rslt__col is-lock" disabled>
+          <legend class="sr-only">최종결과 (비활성)</legend>
+          <h4>최종결과 <i data-lucide="lock"></i></h4>
+          <div class="choice"><label><input type="radio" name="fin" checked> 미확인</label><label><input type="radio" name="fin"> 보류</label><label><input type="radio" name="fin"> 합격</label><label><input type="radio" name="fin"> 불합격</label></div>
+        </fieldset>
+      </div>
+      <p class="foot-note">서류 불합격 시 면접·최종 결과가 자동으로 불합격 처리됩니다. 면접 불합격 시 최종 결과가 자동으로 불합격 처리됩니다. 저장한 결과는 지원자 마이페이지에 바로 표시됩니다.</p>
+      <div class="act" style="margin-top:var(--sp-3)">
+        <button class="btn btn--primary btn--sm" type="button" data-confirm="전형결과를 저장하시겠습니까?&#10;지원자에게 결과가 통보됩니다. (지원자 마이페이지 입사지원 내역에 표시)" data-done="전형결과를 저장했습니다.">결과 저장</button>
+      </div>
+
+      <!-- ③ 이력서 (FR-BZM-U20) : 지원 시점 이력서를 지원자가 고른 템플릿(기본형·강조형·심플형)으로 렌더링
+           방식 = 볼 때마다 렌더링 (지원 시점 데이터 TB_UNTACT_RESUME + 템플릿 · HTML 저장 없음 · 2026-10-02 결정)
+           마크업 · 클래스 = JOBABA_AI 이력서 최종확인 템플릿(resume-write-ai.html)과 동일 / 스타일 = css/resume-tpl.css
+           기업 열람용 : 원본과 같이 성별·나이 표시 (입사지원 동의서 제공항목 근거 · 2026-10-02 결정 C)
+           [개발] 모든 값은 출력 시 이스케이프(<c:out>) · 자사 공고 지원자만 조회(소유 기업 검증)
+           [개발] 열람할 때마다 접근 이력 기록(TB_ENT_SPRT_ACCES_LOG 01 · 결정 J) · 지원취소 건은 열람 차단(결정 K)
+           프로토타입 : ?tpl=basic | emphasis | compact 로 3종 확인 (기본 = 강조형) · 운영 값 = TB_MBER_RESUME.TMPLAT_CD (NULL → basic) -->
+      <h2 class="h-sub">이력서 <span class="small muted" style="font-weight:400">지원 시점 기준 · <span id="tpl-name">강조형</span> 템플릿</span></h2>
+      <div class="note"><i data-lucide="lock"></i><span>이력서는 화면에서만 확인할 수 있습니다. <b>다운로드·인쇄는 제공하지 않습니다.</b> 개인정보 보호를 위해 이력서 열람과 첨부파일 내려받기 기록이 남습니다.</span></div>
+      <div class="resume-preview-frame" style="user-select:none">
+
+        <!-- 기본형 -->
+        <article class="resume-preview-template resume-basic hidden" data-tpl="basic">
+          <header class="resume-title-block basic-title-block">
+            <h4>공정 데이터로 수율을 개선하는 공정기술 엔지니어</h4>
+          </header>
+          <section class="resume-profile-strip basic-profile-strip">
+            <div class="resume-profile-person">
+              <div class="resume-person-card">
+                <strong>김민수</strong>
+                <span>남, 30세</span>
+              </div>
+            </div>
+            <div class="resume-profile-list">
+              <p><strong>연락처</strong><span>010-1234-1234, minsu.k@example.com</span></p>
+              <p><strong>주소</strong><span>경기 수원시 영통구</span></p>
+              <p><strong>현재상태</strong><span>구직중</span></p>
+              <p><strong>키워드</strong><span>식각 공정 · 수율 분석 · SPC</span></p>
+            </div>
+          </section>
+          <section class="basic-section">
+            <h5>희망근무조건</h5>
+            <div class="basic-row"><strong>희망직종</strong><span>연구직 및 공학 기술직 &gt; 반도체 공정기술</span></div>
+            <div class="basic-row"><strong>근무지역</strong><span>경기 &gt; 수원시, 경기 &gt; 용인시</span></div>
+            <div class="basic-row"><strong>경력/근무형태/연봉</strong><span>04년 02개월 · 정규직 · 회사내규</span></div>
+          </section>
+          <section class="basic-section">
+            <h5>학력</h5>
+            <div class="basic-row"><strong>OO대학교 신소재공학과</strong><span>2020.02 졸업 · 대졸(4년)</span></div>
+          </section>
+          <section class="basic-section">
+            <h5>경력 및 수행업무</h5>
+            <div class="basic-career">
+              <strong>OO반도체 | 공정기술팀 사원</strong>
+              <span>2020.07 - 2024.09</span>
+              <ul>
+                <li>식각 공정 조건 개선으로 불량률 감소</li>
+                <li>공정 데이터 수집·분석으로 수율 저하 원인 추적</li>
+                <li>SPC 관리도 운영과 이상 공정 조기 경보 체계 정비</li>
+              </ul>
+            </div>
+          </section>
+          <div class="basic-grid">
+            <section class="basic-section">
+              <h5>자격증 · 어학</h5>
+              <p>반도체설계산업기사 · 한국산업인력공단 · 2021.05</p>
+              <p>TOEIC 780점 · 영어 · 2023.03</p>
+            </section>
+            <section class="basic-section">
+              <h5>수상 · 교육</h5>
+              <p>사내 공정개선 아이디어 우수상</p>
+              <p>반도체 공정 데이터 분석 실무 교육 수료</p>
+            </section>
+          </div>
+          <section class="basic-section">
+            <h5>취업우대/병역</h5>
+            <p>취업우대: 해당없음</p>
+            <p>병역: 군필 · 육군 · 병장</p>
+          </section>
+          <section class="basic-section">
+            <h5>자기소개서</h5>
+            <p>현장과 데이터를 함께 보는 엔지니어</p>
+            <p>공정 불량 원인을 데이터로 추적해 수율을 개선한 경험이 있습니다. 현장과 데이터를 함께 보는 엔지니어로 성장하고 싶습니다.</p>
+          </section>
+          <section class="basic-section">
+            <h5>보유 역량</h5>
+            <div class="basic-tags"><span>공정 데이터 분석</span><span>Python</span><span>SPC</span><span>식각 공정</span><span>보고서 작성</span></div>
+          </section>
+        </article>
+
+        <!-- 강조형 -->
+        <article class="resume-preview-template resume-emphasis hidden" data-tpl="emphasis">
+          <aside class="emphasis-side">
+            <div class="resume-person-card emphasis-person-card">
+              <strong>김민수</strong>
+              <span>남, 30세</span>
+            </div>
+            <section>
+              <h5>기본정보</h5>
+              <p>010-1234-1234</p>
+              <p>minsu.k@example.com</p>
+              <p>경기 수원시 영통구</p>
+            </section>
+            <section>
+              <h5>학력</h5>
+              <p>2020.02<br><strong>OO대학교</strong><br>신소재공학과 졸업</p>
+            </section>
+            <section>
+              <h5>보유 역량</h5>
+              <ul>
+                <li>공정 데이터 분석</li>
+                <li>Python</li>
+                <li>SPC</li>
+                <li>식각 공정</li>
+              </ul>
+            </section>
+            <section>
+              <h5>자격증 · 어학</h5>
+              <ul>
+                <li>반도체설계산업기사</li>
+                <li>TOEIC 780점</li>
+              </ul>
+            </section>
+          </aside>
+          <div class="emphasis-main">
+            <header class="resume-title-block emphasis-title-block">
+              <p>반도체 공정기술 · 구직중</p>
+              <h4>공정 데이터로 수율을 개선하는 공정기술 엔지니어</h4>
+              <div class="emphasis-profile-line">
+                <span>연락처 010-1234-1234</span>
+                <span>희망직종 연구직 및 공학 기술직 &gt; 반도체 공정기술</span>
+                <span>희망지역 수원시, 용인시</span>
+              </div>
+            </header>
+            <section>
+              <h5>희망근무조건</h5>
+              <p>희망직종은 연구직 및 공학 기술직 &gt; 반도체 공정기술이며, 희망 근무지역은 경기 수원시, 경기 용인시입니다. 정규직을 희망하고 연봉은 회사내규를 따릅니다.</p>
+            </section>
+            <section>
+              <h5>경력 및 수행업무</h5>
+              <div class="emphasis-timeline">
+                <article>
+                  <div><strong>OO반도체</strong><span>2020.07 - 2024.09</span></div>
+                  <p>공정기술팀 사원</p>
+                  <ul>
+                    <li>식각 공정 조건 개선으로 불량률 감소</li>
+                    <li>공정 데이터 수집·분석으로 수율 저하 원인 추적</li>
+                    <li>SPC 관리도 운영과 이상 공정 조기 경보 체계 정비</li>
+                  </ul>
+                </article>
+              </div>
+            </section>
+            <section>
+              <h5>대외활동 · 수상 · 교육</h5>
+              <p>수상: 사내 공정개선 아이디어 우수상 · 교육: 반도체 공정 데이터 분석 실무 교육 수료</p>
+            </section>
+            <section>
+              <h5>취업우대/병역</h5>
+              <p>취업우대는 해당없음이며, 병역은 군필·육군·병장입니다.</p>
+            </section>
+            <section>
+              <h5>자기소개서</h5>
+              <p>현장과 데이터를 함께 보는 엔지니어. 공정 불량 원인을 데이터로 추적해 수율을 개선한 경험이 있습니다. 신규 라인 안정화에 기여하고, 현장과 데이터를 함께 보는 엔지니어로 성장하고 싶습니다.</p>
+            </section>
+          </div>
+        </article>
+
+        <!-- 심플형 -->
+        <article class="resume-preview-template resume-simple hidden" data-tpl="compact">
+          <header class="simple-head">
+            <h4>공정 데이터로 수율을 개선하는 공정기술 엔지니어</h4>
+            <p>KIM MINSU</p>
+          </header>
+          <div class="simple-profile-line">
+            <strong>김민수</strong>
+            <span>남, 30세</span>
+            <span>010-1234-1234</span>
+            <span>minsu.k@example.com</span>
+            <span>경기 수원시 영통구</span>
+          </div>
+          <section class="simple-summary">
+            <ul>
+              <li>식각 공정 경력 4년, 공정 조건 개선으로 불량률 감소 경험</li>
+              <li>공정 데이터 분석(Python)으로 수율 저하 원인 추적</li>
+              <li>SPC 관리도 운영과 이상 공정 조기 경보 체계 정비</li>
+            </ul>
+          </section>
+          <section class="simple-section">
+            <h5>희망근무조건</h5>
+            <p>희망직종 연구직 및 공학 기술직 &gt; 반도체 공정기술</p>
+            <p>희망지역 경기 &gt; 수원시, 경기 &gt; 용인시</p>
+            <p>고용형태 정규직 · 희망연봉 회사내규</p>
+          </section>
+          <section class="simple-section">
+            <h5>경력 및 수행업무</h5>
+            <p><strong>OO반도체 공정기술팀</strong> 식각 공정 개선 및 수율 분석 (2020.07 - 2024.09)</p>
+          </section>
+          <section class="simple-section">
+            <h5>학력</h5>
+            <p>OO대학교 신소재공학과 졸업 (2020.02)</p>
+            <p>반도체 공정 데이터 분석 실무 교육 수료 (2023.06)</p>
+          </section>
+          <div class="simple-columns">
+            <section class="simple-section">
+              <h5>보유 역량</h5>
+              <p>공정 데이터 분석 상</p>
+              <p>Python 중상</p>
+              <p>SPC 관리 상</p>
+            </section>
+            <section class="simple-section">
+              <h5>자격증 · 어학</h5>
+              <p>반도체설계산업기사</p>
+              <p>영어 TOEIC 780점</p>
+            </section>
+          </div>
+          <section class="simple-section">
+            <h5>대외활동 · 취업우대/병역</h5>
+            <p>수상: 사내 공정개선 아이디어 우수상</p>
+            <p>취업우대: 해당없음 · 병역: 군필, 육군, 병장</p>
+          </section>
+          <section class="simple-section">
+            <h5>자기소개서</h5>
+            <p>현장과 데이터를 함께 보는 엔지니어. 공정 불량 원인을 데이터로 추적해 수율을 개선한 경험이 있습니다.</p>
+          </section>
+          <footer class="simple-foot">
+            <span>@jobaba_resume</span>
+            <span>위 기재한 사항은 사실과 다름없습니다.</span>
+          </footer>
+        </article>
+
+        <!-- 첨부파일 : 입사지원 시 지원자가 올린 파일(지원 건 단위 · 운영 폼 첨부 영역) — 템플릿 밖 하단(JOBABA_AI 최종확인과 동일 위치)
+             [개발] 파일 열람·변환 뷰어는 제공하지 않으므로 내려받기로 확인한다. 자사 공고 지원자만 · 소유 기업 검증 · 내려받기마다 접근 이력 기록(TB_ENT_SPRT_ACCES_LOG 02 · 결정 E) -->
+        <section class="resume-preview-attachment-panel" aria-label="첨부파일">
+          <h5>첨부파일 <span class="resume-attachment-count">2</span></h5>
+          <ul class="resume-attachment-list">
+            <li class="resume-attachment-name"><span class="resume-attachment-file"><i data-lucide="paperclip"></i>포트폴리오_김민수.pdf</span><span class="resume-attachment-size">2.4MB</span><button type="button" class="btn btn--outline btn--sm" data-toast="첨부파일을 내려받습니다. 내려받기 기록이 남습니다.">내려받기</button></li>
+            <li class="resume-attachment-name"><span class="resume-attachment-file"><i data-lucide="paperclip"></i>반도체설계산업기사_자격증.jpg</span><span class="resume-attachment-size">380KB</span><button type="button" class="btn btn--outline btn--sm" data-toast="첨부파일을 내려받습니다. 내려받기 기록이 남습니다.">내려받기</button></li>
+          </ul>
+        </section>
+      </div>
+
+      <!-- ④ 사전질문 답변 (FR-BZM-U21) : 공고에 사전질문이 있을 때만 -->
+      <h2 class="h-sub">사전질문 답변</h2>
+      <div class="qa-card"><b>Q. 지원 동기를 알려주세요</b>식각 공정 경험을 살려 신규 라인 안정화에 기여하고 싶어 지원했습니다.</div>
+    </section>
+  </div>
+</main>
+
+
+<script>
+/* 지원자가 고른 템플릿으로 표시 (실서비스 = 지원 시점 이력서의 템플릿 값 · 없으면 기본형) */
+document.addEventListener("DOMContentLoaded",function(){
+  var NAME={basic:"기본형",emphasis:"강조형",compact:"심플형"};  // 운영 코드값 TB_MBER_RESUME.TMPLAT_CD
+  var tpl=new URLSearchParams(location.search).get("tpl");
+  if(tpl==="simple") tpl="compact";
+  if(!NAME[tpl]) tpl="emphasis";
+  document.querySelectorAll("[data-tpl]").forEach(function(a){ a.classList.toggle("hidden", a.getAttribute("data-tpl")!==tpl); });
+  document.getElementById("tpl-name").textContent=NAME[tpl];
+});
+</script>
+
+<div id="site-footer"></div>
+</body>
+</html>

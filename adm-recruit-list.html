@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>잡아바 프로토타입 — 관리자 · 채용정보관리(승인)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/pds.css">
+<script src="https://unpkg.com/lucide@latest"></script>
+<script src="js/bzm-features.js"></script>
+<script src="js/bzm.js"></script>
+</head>
+<body data-user="admin">
+
+<header class="adm-top"><b>잡아바 관리자</b><span>재단 업무담당자 · 로그아웃</span></header>
+<div class="adm">
+  <nav class="adm-side" aria-label="관리자 메뉴">
+    <p>공고관리</p>
+    <a href="adm-recruit-list.html" aria-current="page">채용정보관리</a>
+    <a href="#" aria-disabled="true">인재추천</a>
+    <a href="#" aria-disabled="true">지원자관리</a>
+  </nav>
+
+  <main class="adm-main">
+    <h1>채용정보관리</h1>
+    <p class="adm-crumb">공고관리 › 채용정보관리</p>
+
+    <!-- 검색 : 기존 조건 유지 + 승인상태 추가 (FR-BZM-A01) -->
+    <div class="adm-box">
+      <div class="adm-filter">
+        <b>접수기간</b><span><input class="input input--auto" type="date" aria-label="접수 시작일"> ~ <input class="input input--auto" type="date" aria-label="접수 종료일"></span>
+        <b>기관 선택</b><span><select class="select" aria-label="기관"><option>전체</option></select></span>
+        <b>등록자</b><span class="choice"><label><input type="radio" name="reg" checked> 전체</label><label><input type="radio" name="reg"> 기업회원</label><label><input type="radio" name="reg"> 등록회원</label></span>
+        <b>진행상태</b><span><select class="select" aria-label="진행상태"><option>전체</option><option>접수전</option><option>접수중</option><option>종료</option></select></span>
+        <b>승인상태</b><span class="choice"><label><input type="radio" name="ap"> 전체</label><label><input type="radio" name="ap" checked> 승인대기</label><label><input type="radio" name="ap"> 승인</label><label><input type="radio" name="ap"> 반려</label></span>
+        <b>검색어</b><span><input class="input input--auto" aria-label="검색어" placeholder="기업명·공고명"> <button class="btn btn--primary btn--sm" type="button" data-toast="검색했습니다."><i data-lucide="search"></i>검색</button></span>
+      </div>
+    </div>
+
+    <div class="adm-box">
+      <div class="bar" style="margin-top:0"><span class="small">총 <b class="strong">3</b>건</span><span class="act"><button class="btn btn--outline btn--sm" type="button">엑셀다운로드</button><button class="btn btn--outline btn--sm" type="button">채용공고 등록</button></span></div>
+      <div class="table-wrap">
+        <table class="table">
+          <caption class="sr-only">채용공고 목록 (관리자)</caption>
+          <thead><tr><th scope="col">번호</th><th scope="col">기업명</th><th scope="col" class="l">채용공고</th><th scope="col">접수마감일</th><th scope="col">상태</th><th scope="col">승인</th><th scope="col">지원자</th><th scope="col">인재추천</th><th scope="col">관리</th></tr></thead>
+          <tbody>
+            <tr>
+              <td>3</td><td>잡아바기업</td><td class="l">경력직 소프트웨어 개발자 채용<span class="sub">기업회원 · 신규</span></td><td>2026-12-31</td><td>접수중</td>
+              <td><span class="badge badge--strong"><i data-lucide="clock"></i>대기</span></td><td>11</td><td>Y</td>
+              <td class="cell-act"><button class="btn btn--primary btn--sm" type="button" data-modal-open="m-detail">상세·승인</button> <button class="btn btn--outline btn--sm" type="button" disabled title="승인 완료 공고만 가능">채용차단</button></td>
+            </tr>
+            <tr>
+              <td>2</td><td>(주)경기정밀</td><td class="l">CNC 가공 기능직 채용<span class="sub">기업회원 · 신규</span></td><td>2026-10-18</td><td>접수전</td>
+              <td><span class="badge badge--strong"><i data-lucide="clock"></i>대기</span></td><td>0</td><td>N</td>
+              <td class="cell-act"><button class="btn btn--primary btn--sm" type="button" data-modal-open="m-detail">상세·승인</button> <button class="btn btn--outline btn--sm" type="button" disabled title="승인 완료 공고만 가능">채용차단</button></td>
+            </tr>
+            <tr>
+              <td>1</td><td>경기도일자리재단</td><td class="l">청년 인턴 채용<span class="sub">관리자 대리등록</span></td><td>2026-10-05</td><td>접수중</td>
+              <td class="muted">-</td><td>32</td><td>N</td>
+              <td class="cell-act"><button class="btn btn--outline btn--sm" type="button">상세</button> <button class="btn btn--outline btn--sm" type="button">채용차단</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- 상세(요약) + 승인·반려 (FR-BZM-A02 · A03) -->
+<div class="modal" id="m-detail" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="m-detail-t">
+  <div class="modal__box modal__box--wide">
+    <h2 id="m-detail-t">채용공고 상세 · 승인 검토</h2>
+    <table class="kv">
+      <tr><th scope="row">기업</th><td>잡아바기업 (123-45-*****)</td></tr>
+      <tr><th scope="row">공고제목</th><td>경력직 소프트웨어 개발자 채용</td></tr>
+      <tr><th scope="row">모집분야</th><td>IT·정보통신 › 소프트웨어 › 백엔드</td></tr>
+      <tr><th scope="row">근무조건</th><td>경기 수원시 · 연봉 4,000~5,500만원 · 주 5일</td></tr>
+      <tr><th scope="row">접수기간</th><td>2026-10-06 ~ 2026-12-31 · 채용 시 마감</td></tr>
+      <tr><th scope="row">승인 이력</th><td>2026-09-30 기업 등록 · 승인대기</td></tr>
+    </table>
+    <div class="modal__act">
+      <button class="btn btn--ghost" type="button" data-modal-close>닫기</button>
+      <button class="btn btn--outline" type="button" data-modal-open="m-reject">반려</button>
+      <button class="btn btn--primary" type="button" data-modal-close data-confirm="이 공고를 승인하시겠습니까? 승인 즉시 사용자 화면에 게시됩니다." data-done="승인했습니다. 공고가 게시됩니다.">승인</button>
+    </div>
+  </div>
+</div>
+
+<!-- 반려 사유 입력 (FR-BZM-A03 · RJCT_RSN 필수) -->
+<div class="modal" id="m-reject" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="m-reject-t">
+  <div class="modal__box">
+    <h2 id="m-reject-t">반려 사유 입력</h2>
+    <div class="modal__body">
+      <label for="rj" class="strong">반려 사유 <span class="xsmall muted" style="font-weight:400">(필수 · 기업 화면에 표시됩니다)</span></label>
+      <textarea id="rj" class="input" placeholder="예) 급여조건을 구체적으로 기재해 주세요."></textarea>
+    </div>
+    <div class="modal__act">
+      <button class="btn btn--outline" type="button" data-modal-close>취소</button>
+      <button class="btn btn--primary" type="button" onclick="if(!document.getElementById('rj').value.trim()){bzmToast('반려 사유를 입력해 주세요.');document.getElementById('rj').focus();return;}bzmCloseModals();bzmToast('반려 처리했습니다.');">반려 처리</button>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

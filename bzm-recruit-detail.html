@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>잡아바 프로토타입 — 기업 마이페이지 · 채용공고 상세</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/pds.css">
+<link rel="stylesheet" href="css/jb-header.css"><!-- 상단 헤더 : 디자인 정본 이식 -->
+<script src="https://unpkg.com/lucide@latest"></script>
+<script src="js/bzm-features.js"></script>
+<script src="js/bzm.js"></script>
+<script src="js/jb-header.js"></script>
+</head>
+<body data-user="biz-member">
+<div id="site-header"></div>
+
+<main class="container section">
+  <p class="crumb"><a href="../../03_화면설계/prototype/main-member-a.html">홈</a> › 기업 마이페이지 › 채용공고 관리 › 공고 상세</p>
+
+  <!-- SCR-BZM-01 진입·권한 : 기업회원(BIZRNO 세션)만 진입, 기업명은 세션 표시 (FR-BZM-U29) -->
+  <div class="card ent-card">
+    <div class="ent-card__name"><i data-lucide="building-2"></i><strong class="strong">기업회원 | 잡아바기업</strong>
+      <span class="small muted">사업자번호 123-45-***** · 인사담당자 홍길동</span></div>
+    <span class="badge badge--strong"><i data-lucide="sparkles"></i>인재추천 서비스 이용 기업</span>
+  </div>
+
+  <div class="mp">
+    <!-- 기업 마이페이지 LNB : 개인 마이페이지 구조 준용 -->
+    <nav class="lnb" aria-label="기업 마이페이지 메뉴">
+      <p class="lnb__title">기업 마이페이지</p>
+      <a class="lnb__link" href="bzm-recruit-list.html" aria-current="page">채용공고 관리</a>
+      <a class="lnb__link" href="bzm-applicants.html">지원자 관리</a>
+      <a class="lnb__link" href="bzm-talent.html">인재추천</a>
+    </nav>
+
+    <section aria-labelledby="pg-t">
+      <!-- 채용공고 상세 (FR-BZM-U05 · U11) : 목록에서 공고명 클릭으로 진입. 공고 관리 액션은 이 화면에서만 제공(목록 「관리」 열 없음 · 2026-10-02)
+           액션은 승인·진행 상태에 따라 갈린다 — 승인대기 = 수정·삭제 / 반려 = 사유 확인·수정 후 재요청·삭제 / 게시(접수중·비노출·종료) = 재공고
+           삭제는 접수 시작 전(지원자 0명)만 (결정 I) · 게시 공고 수정 불가 → 재공고 (결정 A) · 미리보기 없음 (결정 B)
+           [개발] SEQ + BIZRNO(세션) 서버 검증 (P-12) · 프로토타입은 ?id=1~5 로 상태별 확인 -->
+      <div class="page-head">
+        <h1 id="pg-t">채용공고 상세</h1>
+      </div>
+
+      <div class="card job-head">
+        <div>
+          <p class="strong" style="font-size:var(--fs-20)" id="d-title"></p>
+          <p class="small muted" style="margin-top:4px" id="d-sub"></p>
+        </div>
+        <div class="act" id="d-badges"></div>
+      </div>
+
+      <!-- 반려 사유 (반려 공고만) -->
+      <div class="note note--strong" id="d-reject" hidden style="margin-top:var(--sp-4)"><i data-lucide="message-square-warning"></i><span><b>반려 사유</b> · <span id="d-reject-dt"></span><br><span id="d-reject-rsn"></span></span></div>
+      <!-- 상태 안내 -->
+      <div class="note" id="d-guide" style="margin-top:var(--sp-4)"><i data-lucide="info"></i><span id="d-guide-txt"></span></div>
+
+      <!-- 지원 현황 -->
+      <h2 class="h-sub">지원 현황</h2>
+      <div class="stat-grid">
+        <div class="stat"><div class="stat__num" id="d-sprt">0</div><div class="stat__label">지원자</div></div>
+        <div class="stat"><div class="stat__num" id="d-new">0</div><div class="stat__label">미열람</div></div>
+        <div class="stat"><div class="stat__num" id="d-step">-</div><div class="stat__label">현재 전형단계</div></div>
+        <div class="stat"><div class="stat__num" id="d-recom">N</div><div class="stat__label">인재추천</div></div>
+      </div>
+      <div class="act" style="margin-top:var(--sp-3)">
+        <a class="btn btn--outline btn--sm" id="d-go-sprt" href="bzm-applicants.html"><i data-lucide="users"></i>지원자 관리</a>
+        <a class="btn btn--outline btn--sm" id="d-go-talent" href="bzm-talent.html"><i data-lucide="sparkles"></i>추천 인재</a>
+      </div>
+
+      <!-- 공고 내용 (등록 화면 입력값 요약) -->
+      <h2 class="h-sub">공고 내용</h2>
+      <table class="kv">
+        <tr><th scope="row">모집분야</th><td id="d-cl"></td></tr>
+        <tr><th scope="row">고용형태 · 경력</th><td id="d-emp"></td></tr>
+        <tr><th scope="row">채용인원</th><td id="d-prsn"></td></tr>
+        <tr><th scope="row">근무지역 · 급여</th><td id="d-area"></td></tr>
+        <tr><th scope="row">최종학력</th><td id="d-acd"></td></tr>
+        <tr><th scope="row">접수기간</th><td id="d-period"></td></tr>
+        <tr><th scope="row">문의처 · 담당자</th><td>031-270-9988 · 홍길동</td></tr>
+        <tr><th scope="row">사전질문</th><td id="d-qa"></td></tr>
+        <tr><th scope="row">채용공고 노출</th><td id="d-use"></td></tr>
+        <tr><th scope="row">등록 · 승인</th><td id="d-hist"></td></tr>
+      </table>
+
+      <!-- 공고 관리 (상태별) -->
+      <div class="form-act" id="d-actions"></div>
+    </section>
+  </div>
+</main>
+
+<script>
+/* 프로토타입 표본 데이터 — 목록 5건과 같은 공고 (?id=1~5) */
+(function(){
+  var D={
+    5:{t:"경력직 소프트웨어 개발자 채용",cl:"IT·정보통신 › 소프트웨어 › 백엔드",emp:"정규직 · 경력 3년 이상",prsn:"2명",area:"경기 수원시 · 연봉 4,000~5,500만원",acd:"대졸(4년) 이상",period:"2026-10-06 ~ 2026-12-31 · 채용 시 마감",prog:"접수전",aprv:"wait",sprt:0,neu:0,step:"-",recom:"Y",qa:"1문항",use:"노출",hist:"2026-09-30 등록 · 승인대기"},
+    4:{t:"품질관리 신입사원 채용",cl:"생산·제조 › 품질관리",emp:"정규직 · 신입",prsn:"3명",area:"경기 화성시 · 협의",acd:"고졸 이상",period:"2026-10-01 ~ 2026-10-15",prog:"접수전",aprv:"reject",sprt:0,neu:0,step:"-",recom:"N",qa:"없음",use:"노출",hist:"2026-09-25 등록 · 2026-09-26 반려",rjdt:"2026-09-26",rj:"급여조건이 \"협의\"로만 기재되어 있습니다. 최소 급여 또는 급여 범위를 기재한 후 다시 승인을 요청해 주세요."},
+    3:{t:"반도체 공정기술 엔지니어 채용",cl:"연구개발·설계 › 반도체·디스플레이 › 공정기술",emp:"정규직 · 경력무관",prsn:"2명",area:"경기 수원시 · 회사내규",acd:"대졸(4년) 이상",period:"2026-09-10 ~ 2026-10-02",prog:"접수중",aprv:"posted",sprt:8,neu:3,step:"서류전형",recom:"Y",qa:"1문항",use:"노출",hist:"2026-09-08 등록 · 2026-09-09 승인"},
+    2:{t:"기업지원사업 운영 담당자 채용",cl:"경영·사무 › 사업관리",emp:"계약직 · 경력 1년 이상",prsn:"1명",area:"경기 수원시 · 월급 280만원",acd:"대졸(2~3년) 이상",period:"2026-08-25 ~ 2026-09-15",prog:"서류전형",aprv:"hidden",sprt:4,neu:0,step:"서류전형",recom:"N",qa:"없음",use:"비노출",hist:"2026-08-22 등록 · 2026-08-23 승인"},
+    1:{t:"생산직 사원 채용 (주간 고정)",cl:"생산·제조 › 생산직",emp:"정규직 · 경력무관",prsn:"5명",area:"경기 평택시 · 월급 260만원",acd:"학력무관",period:"2026-07-01 ~ 2026-07-20",prog:"종료",aprv:"posted",sprt:23,neu:0,step:"종료",recom:"Y",qa:"2문항",use:"노출",hist:"2026-06-28 등록 · 2026-06-29 승인"}
+  };
+  var id=new URLSearchParams(location.search).get("id"); var d=D[id]||D[3];
+  var $=function(i){return document.getElementById(i);};
+  document.addEventListener("DOMContentLoaded",function(){
+    $("d-title").textContent=d.t;
+    $("d-sub").textContent=d.cl+" · "+d.emp;
+    var B={wait:'<span class="badge badge--strong"><i data-lucide="clock"></i>승인대기</span>',
+           reject:'<span class="badge badge--dash"><i data-lucide="circle-alert"></i>반려</span>',
+           posted:'<span class="badge badge--solid"><i data-lucide="check"></i>게시중</span>',
+           hidden:'<span class="badge badge--ghost"><i data-lucide="eye-off"></i>비노출</span>'};
+    $("d-badges").innerHTML='<span class="badge">'+d.prog+'</span> '+B[d.aprv];
+    ["cl","emp","prsn","area","acd","period","qa","use","hist"].forEach(function(k){ $("d-"+k).textContent=d[k]; });
+    $("d-sprt").textContent=d.sprt+"명"; $("d-new").textContent=d.neu+"명"; $("d-step").textContent=d.step; $("d-recom").textContent=d.recom;
+    if(!d.sprt){ var a=$("d-go-sprt"); a.setAttribute("aria-disabled","true"); a.removeAttribute("href"); }
+    if(!(d.recom==="Y" && (d.aprv==="posted"||d.aprv==="hidden"))){ var b=$("d-go-talent"); b.setAttribute("aria-disabled","true"); b.removeAttribute("href"); b.title="인재추천 사용 · 승인 공고만 이용 가능"; }
+    var DEL='<button class="btn btn--ghost" type="button" data-confirm="이 공고를 삭제하시겠습니까?&#10;삭제는 접수 시작 전에만 할 수 있습니다." data-done="삭제되었습니다." data-go="bzm-recruit-list.html">삭제</button>';
+    var REPOST='<button class="btn btn--primary" type="button" data-confirm="게시 중인 공고는 수정할 수 없습니다.&#10;이 공고 내용을 불러와 새 공고로 등록하시겠습니까?" data-go="bzm-recruit-form.html?mode=copy"><i data-lucide="copy"></i>재공고</button>';
+    var G, A;
+    if(d.aprv==="wait"){ G="재단 담당자가 승인을 검토하고 있습니다. 승인 전에는 내용을 수정할 수 있고, 접수 시작 전이라 삭제할 수 있습니다.";
+      A=DEL+'<a class="btn btn--primary" href="bzm-recruit-form.html?mode=edit">수정</a>'; }
+    else if(d.aprv==="reject"){ G="반려 사유를 확인하고 공고를 수정한 뒤 다시 승인을 요청해 주세요.";
+      $("d-reject").hidden=false; $("d-reject-dt").textContent="반려일 "+d.rjdt; $("d-reject-rsn").textContent=d.rj;
+      A=DEL+'<a class="btn btn--primary" href="bzm-recruit-form.html?mode=edit">수정 후 재요청</a>'; }
+    else { G="게시된 공고는 수정·삭제할 수 없습니다. 내용을 바꾸려면 [재공고]로 새 공고를 등록해 주세요. 기존 공고와 지원자는 그대로 유지됩니다.";
+      A=REPOST; }
+    $("d-guide-txt").textContent=G;
+    $("d-actions").innerHTML=A;
+    if(window.lucide) lucide.createIcons();
+  });
+})();
+</script>
+
+<div id="site-footer"></div>
+</body>
+</html>

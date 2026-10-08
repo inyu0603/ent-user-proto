@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>잡아바 프로토타입 — 기업 마이페이지 · 채용공고 관리</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/pds.css">
+<link rel="stylesheet" href="css/jb-header.css"><!-- 상단 헤더 : 디자인 정본 이식 -->
+<script src="https://unpkg.com/lucide@latest"></script>
+<script src="js/bzm-features.js"></script>
+<script src="js/bzm.js"></script>
+<script src="js/jb-header.js"></script>
+</head>
+<body data-user="biz-member">
+<div id="site-header"></div>
+
+<main class="container section">
+  <p class="crumb"><a href="../../03_화면설계/prototype/main-member-a.html">홈</a> › 기업 마이페이지 › 채용공고 관리</p>
+
+  <!-- SCR-BZM-01 진입·권한 : 기업회원(BIZRNO 세션)만 진입, 기업명은 세션 표시 (FR-BZM-U29) -->
+  <div class="card ent-card">
+    <div class="ent-card__name"><i data-lucide="building-2"></i><strong class="strong">기업회원 | 잡아바기업</strong>
+      <span class="small muted">사업자번호 123-45-***** · 인사담당자 홍길동</span></div>
+    <span class="badge badge--strong"><i data-lucide="sparkles"></i>인재추천 서비스 이용 기업</span>
+  </div>
+
+  <div class="mp">
+    <!-- 기업 마이페이지 LNB : 개인 마이페이지 구조 준용 -->
+    <nav class="lnb" aria-label="기업 마이페이지 메뉴">
+      <p class="lnb__title">기업 마이페이지</p>
+      <a class="lnb__link" href="bzm-recruit-list.html" aria-current="page">채용공고 관리</a>
+      <a class="lnb__link" href="bzm-applicants.html">지원자 관리</a>
+      <a class="lnb__link" href="bzm-talent.html">인재추천</a>
+    </nav>
+
+    <section aria-labelledby="pg-t">
+      <div class="page-head">
+        <h1 id="pg-t">채용공고 관리</h1>
+        <a class="btn btn--primary" href="bzm-recruit-form.html"><i data-lucide="file-plus-2"></i>공고 등록</a>
+      </div>
+
+      <div class="note"><i data-lucide="info"></i><span>등록한 공고는 <b>재단 담당자 승인 후 게시</b>됩니다. 공고명을 누르면 상세 화면에서 수정·재공고·삭제를 할 수 있습니다.</span></div>
+
+      <!-- FR-BZM-U01 상태별 건수 : 클릭 시 해당 조건으로 필터 (승인 관련은 서브배경 + 굵은 라벨로 구분) -->
+      <div class="sum" role="group" aria-label="공고 상태별 건수">
+        <button type="button" data-toast="접수전 공고로 목록을 필터합니다."><b>2</b><span>접수전</span></button>
+        <button type="button" data-toast="접수중 공고로 목록을 필터합니다."><b>1</b><span>접수중</span></button>
+        <button type="button" data-toast="접수마감 공고로 목록을 필터합니다."><b>0</b><span>접수마감</span></button>
+        <button type="button" data-toast="서류전형 공고로 목록을 필터합니다."><b>1</b><span>서류전형</span></button>
+        <button type="button" data-toast="면접전형 공고로 목록을 필터합니다."><b>0</b><span>면접전형</span></button>
+        <button type="button" data-toast="결과발표 공고로 목록을 필터합니다."><b>0</b><span>결과발표</span></button>
+        <button type="button" data-toast="종료 공고로 목록을 필터합니다."><b>1</b><span>종료</span></button>
+        <button type="button" class="is-attn sum__div" data-toast="승인대기 공고로 목록을 필터합니다."><b>1</b><span>승인대기</span></button>
+        <button type="button" class="is-attn" data-toast="반려 공고로 목록을 필터합니다."><b>1</b><span>반려</span></button>
+      </div>
+
+      <!-- FR-BZM-U03 검색·필터 : 관리자용 채용차단·기관선택·등록자구분·채용관노출·상세설정·추천내역·엑셀 제거 -->
+      <form class="search" role="search" data-toast-submit="검색 조건을 적용했습니다.">
+        <label>진행상태<select class="select"><option>전체</option><option>접수전</option><option>접수중</option><option>접수마감</option><option>서류전형</option><option>면접전형</option><option>결과발표</option><option>종료</option></select></label>
+        <label>승인상태<select class="select"><option>전체</option><option>승인대기</option><option>승인</option><option>반려</option></select></label>
+        <label>접수기간<select class="select"><option>전체</option><option>오늘</option><option>1주일</option><option>1개월</option><option>직접입력</option></select></label>
+        <label>모집분야<select class="select"><option>대분류 전체</option><option>연구개발·설계</option><option>생산·제조</option><option>경영·사무</option><option>IT·정보통신</option></select></label>
+        <label class="is-wide">검색어<input class="input" type="search" placeholder="공고제목"></label>
+        <div class="act"><button class="btn btn--primary btn--sm" type="submit"><i data-lucide="search"></i>검색</button><button class="btn btn--outline btn--sm" type="reset">초기화</button></div>
+      </form>
+
+      <div class="bar">
+        <p class="small">총 <b class="strong">5</b>건</p>
+        <select class="select" aria-label="정렬"><option>등록일순</option><option>접수마감 임박순</option></select>
+      </div>
+
+      <!-- FR-BZM-U02 목록 · U04 승인상태 · U05 관리 · U06·U07 이동 -->
+      <div class="table-wrap">
+        <table class="table">
+          <caption class="sr-only">채용공고 목록</caption>
+          <thead><tr>
+            <th scope="col">NO</th><th scope="col" class="l">채용공고</th><th scope="col">접수기간</th>
+            <th scope="col">진행상태</th><th scope="col">승인상태</th><th scope="col">지원자</th><th scope="col">인재추천</th>
+          </tr></thead>
+          <tbody>
+            <tr>
+              <td>5</td>
+              <td class="l"><a class="link" href="bzm-recruit-detail.html?id=5">경력직 소프트웨어 개발자 채용</a><span class="sub">IT·정보통신 · 정규직 · 경력 3년↑</span></td>
+              <td>10.06 ~ 12.31<span class="sub">채용 시 마감</span></td>
+              <td>접수전</td>
+              <td><span class="badge badge--strong"><i data-lucide="clock"></i>승인대기</span></td>
+              <td><span class="muted">0명</span></td>
+              <td><button class="link" type="button" disabled title="승인 후 이용 가능">Y</button></td>
+            </tr>
+            <tr>
+              <td>4</td>
+              <td class="l"><a class="link" href="bzm-recruit-detail.html?id=4">품질관리 신입사원 채용</a><span class="sub">생산·제조 · 정규직 · 신입</span></td>
+              <td>10.01 ~ 10.15</td>
+              <td>접수전</td>
+              <td><span class="badge badge--dash"><i data-lucide="circle-alert"></i>반려</span></td>
+              <td><span class="muted">0명</span></td>
+              <td>N</td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td class="l"><a class="link" href="bzm-recruit-detail.html?id=3">반도체 공정기술 엔지니어 채용</a><span class="sub">연구개발·설계 · 정규직 · 경력무관</span></td>
+              <td>09.10 ~ 10.02</td>
+              <td>접수중</td>
+              <td><span class="badge badge--solid"><i data-lucide="check"></i>게시중</span></td>
+              <td><a class="link" href="bzm-applicants.html">8명</a> <span class="badge badge--solid">NEW 3</span></td>
+              <td><a class="link" href="bzm-talent.html">Y</a></td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td class="l"><a class="link" href="bzm-recruit-detail.html?id=2">기업지원사업 운영 담당자 채용</a><span class="sub">경영·사무 · 계약직 · 경력 1년↑</span></td>
+              <td>08.25 ~ 09.15</td>
+              <td>서류전형</td>
+              <td><span class="badge badge--ghost"><i data-lucide="eye-off"></i>비노출</span><span class="sub">노출 여부 N</span></td>
+              <td><a class="link" href="bzm-applicants.html">4명</a></td>
+              <td>N</td>
+            </tr>
+            <tr>
+              <td>1</td>
+              <td class="l"><a class="link" href="bzm-recruit-detail.html?id=1">생산직 사원 채용 (주간 고정)</a><span class="sub">생산·제조 · 정규직 · 경력무관</span></td>
+              <td>07.01 ~ 07.20</td>
+              <td>종료</td>
+              <td><span class="badge badge--solid"><i data-lucide="check"></i>게시중</span></td>
+              <td><a class="link" href="bzm-applicants.html">23명</a></td>
+              <td><a class="link" href="bzm-talent.html">Y</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <nav class="pager" aria-label="페이지"><a aria-current="page" href="#">1</a></nav>
+    </section>
+  </div>
+</main>
+
+
+<div id="site-footer"></div>
+</body>
+</html>

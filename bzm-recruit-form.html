@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>잡아바 프로토타입 — 기업 마이페이지 · 채용공고 등록·수정</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/pds.css">
+<link rel="stylesheet" href="css/jb-header.css"><!-- 상단 헤더 : 디자인 정본 이식 -->
+<script src="https://unpkg.com/lucide@latest"></script>
+<script src="js/bzm-features.js"></script>
+<script src="js/bzm.js"></script>
+<script src="js/jb-header.js"></script>
+</head>
+<body data-user="biz-member">
+<div id="site-header"></div>
+
+<main class="container section">
+  <p class="crumb"><a href="../../03_화면설계/prototype/main-member-a.html">홈</a> › 기업 마이페이지 › 채용공고 관리 › <span data-mode="new">등록</span><span data-mode="edit">수정</span></p>
+
+  <!-- SCR-BZM-01 진입·권한 (FR-BZM-U29) -->
+  <div class="card ent-card">
+    <div class="ent-card__name"><i data-lucide="building-2"></i><strong class="strong">기업회원 | 잡아바기업</strong>
+      <span class="small muted">사업자번호 123-45-***** · 인사담당자 홍길동</span></div>
+    <span class="badge badge--strong"><i data-lucide="sparkles"></i>인재추천 서비스 이용 기업</span>
+  </div>
+
+  <div class="mp">
+    <nav class="lnb" aria-label="기업 마이페이지 메뉴">
+      <p class="lnb__title">기업 마이페이지</p>
+      <a class="lnb__link" href="bzm-recruit-list.html" aria-current="page">채용공고 관리</a>
+      <a class="lnb__link" href="bzm-applicants.html">지원자 관리</a>
+      <a class="lnb__link" href="bzm-talent.html">인재추천</a>
+    </nav>
+
+    <section aria-labelledby="pg-t">
+      <div class="page-head">
+        <h1 id="pg-t"><span data-mode="new">채용공고 등록</span><span data-mode="edit">채용공고 수정</span></h1>
+      </div>
+
+      <!-- 안내 : 신규 = 승인 후 게시 / 수정 = 승인 전 공고만 · 다시 승인 요청 / 재공고 = 기존 공고 불러와 새 공고 (결정 A) -->
+      <div class="note note--strong" id="copy-note" hidden><i data-lucide="copy"></i><span>기존 공고 내용을 불러왔습니다. 필요한 내용을 고친 뒤 저장하면 <b>새 공고로 승인을 요청</b>합니다. 기존 공고와 지원자는 그대로 유지됩니다.</span></div>
+      <div class="note" data-mode="new"><i data-lucide="info"></i><span>저장하면 재단 담당자에게 <b>승인을 요청</b>합니다. 승인 후 채용공고가 게시됩니다. 기업정보는 로그인 정보로 자동 입력됩니다.</span></div>
+      <div class="note note--strong" data-mode="edit"><i data-lucide="triangle-alert"></i><span>승인 전(승인대기·반려) 공고만 수정할 수 있습니다. 저장하면 <b>다시 승인을 요청</b>합니다.</span></div>
+
+      <p class="req-guide"><b class="strong">*</b> 표시는 필수 입력 항목입니다.</p>
+
+      <!-- FR-BZM-U08 입력폼 · U09 검증 (관리자 폼 필수값 규칙·메시지 승계) -->
+      <form data-validate novalidate data-done="등록되었습니다. 관리자 승인 후 게시됩니다." data-go="bzm-recruit-list.html">
+
+        <!-- ① 기본정보 -->
+        <fieldset class="fset">
+          <legend>기본정보</legend>
+          <div class="frow" data-required>
+            <label class="frow__label" for="f-title">공고제목<em>*</em></label>
+            <div class="frow__field"><input id="f-title" name="title" class="input" placeholder="예) 반도체 공정기술 엔지니어 채용">
+              <p class="ferr"><i data-lucide="circle-alert"></i><span>공고명을 입력 해주세요.</span></p></div>
+          </div>
+          <div class="frow" data-required>
+            <span class="frow__label">모집분야<em>*</em></span>
+            <div class="frow__field">
+              <select class="select" name="clCd1" aria-label="모집분야 대분류"><option value="">대분류</option><option>연구개발·설계</option><option>생산·제조</option><option>경영·사무</option><option>IT·정보통신</option></select>
+              <select class="select" name="clCd3" aria-label="모집분야 중분류"><option value="">중분류</option><option>반도체·디스플레이</option></select>
+              <select class="select" name="clCd5" aria-label="모집분야 소분류"><option value="">소분류</option><option>공정기술</option></select>
+              <p class="ferr"><i data-lucide="circle-alert"></i><span>모집분야를 선택 해주세요.</span></p>
+            </div>
+          </div>
+          <div class="frow">
+            <label class="frow__label" for="f-emp">고용형태</label>
+            <div class="frow__field"><select id="f-emp" class="select" name="empTpCd"><option>정규직</option><option>계약직</option><option>인턴</option><option>파견직</option></select></div>
+          </div>
+          <div class="frow" data-required>
+            <span class="frow__label">경력요건<em>*</em></span>
+            <div class="frow__field">
+              <select class="select" name="careerCd" aria-label="경력요건"><option value="">선택</option><option>신입</option><option>경력</option><option>경력무관</option></select>
+              <input class="input input--auto" name="careerCnt" data-optional style="width:110px" placeholder="년 이상" aria-label="경력 연수">
+              <p class="ferr"><i data-lucide="circle-alert"></i><span>채용구분을 선택해주세요.</span></p>
+            </div>
+          </div>
+          <div class="frow" data-required>
+            <label class="frow__label" for="f-prsn">채용인원<em>*</em></label>
+            <div class="frow__field"><input id="f-prsn" name="recrtPrsn" class="input input--auto" style="width:140px" maxlength="50" placeholder="예) 0명, 00명">
+              <p class="ferr"><i data-lucide="circle-alert"></i><span>채용인원을 입력해주세요</span></p></div>
+          </div>
+        </fieldset>
+
+        <!-- ② 근무조건 -->
+        <fieldset class="fset">
+          <legend>근무조건</legend>
+          <div class="frow" data-required>
+            <span class="frow__label">근무지역<em>*</em></span>
+            <div class="frow__field">
+              <div class="choice" data-chips><button type="button" class="chip" aria-pressed="true" data-remove aria-label="경기 수원시 삭제">경기 수원시 <i data-lucide="x"></i></button></div>
+              <button type="button" class="btn btn--outline btn--sm" data-toast="근무지역 선택 레이어(최대 3개)를 엽니다."><i data-lucide="map-pin"></i>지역 선택 (최대 3개)</button>
+              <p class="ferr"><i data-lucide="circle-alert"></i><span>근무지역을 선택해주세요.</span></p>
+            </div>
+          </div>
+          <div class="frow">
+            <span class="frow__label">급여조건</span>
+            <div class="frow__field">
+              <select class="select" name="payCond" aria-label="급여 유형"><option>연봉</option><option>월급</option><option>시급</option><option>회사내규</option></select>
+              <input class="input input--auto" style="width:130px" placeholder="최소(만원)" aria-label="최소 급여"> ~
+              <input class="input input--auto" style="width:130px" placeholder="최대(만원)" aria-label="최대 급여">
+            </div>
+          </div>
+          <div class="frow">
+            <span class="frow__label">근무요일 · 시간</span>
+            <div class="frow__field">
+              <select class="select" aria-label="근무요일"><option>주 5일(월~금)</option><option>주 6일</option><option>교대</option></select>
+              <input class="input input--auto" type="time" value="09:00" aria-label="근무 시작 시간"> ~ <input class="input input--auto" type="time" value="18:00" aria-label="근무 종료 시간">
+            </div>
+          </div>
+          <div class="frow">
+            <span class="frow__label">복지 키워드</span>
+            <div class="frow__field choice" role="group" aria-label="복지 키워드">
+              <button type="button" class="chip" aria-pressed="true" data-chip>4대보험</button><button type="button" class="chip" aria-pressed="false" data-chip>퇴직금</button><button type="button" class="chip" aria-pressed="true" data-chip>통근버스</button><button type="button" class="chip" aria-pressed="false" data-chip>기숙사</button><button type="button" class="chip" aria-pressed="false" data-chip>중식제공</button><button type="button" class="chip" aria-pressed="false" data-chip>유연근무</button>
+            </div>
+          </div>
+        </fieldset>
+
+        <!-- ③ 지원자격 -->
+        <fieldset class="fset">
+          <legend>지원자격</legend>
+          <div class="frow" data-required>
+            <label class="frow__label" for="f-acd">최종학력<em>*</em></label>
+            <div class="frow__field"><select id="f-acd" class="select" name="acdmcrCd"><option value="">선택</option><option>학력무관</option><option>고졸 이상</option><option>대졸(2~3년) 이상</option><option>대졸(4년) 이상</option></select>
+              <p class="ferr"><i data-lucide="circle-alert"></i><span>학력을 선택해주세요.</span></p></div>
+          </div>
+          <div class="frow">
+            <label class="frow__label" for="f-pf">우대조건</label>
+            <div class="frow__field"><input id="f-pf" name="pfCond" class="input" placeholder="예) 관련 자격증 소지자"></div>
+          </div>
+          <div class="frow">
+            <span class="frow__label">특화대상(취업우대)</span>
+            <div class="frow__field choice">
+              <label><input type="checkbox"> 장애인</label><label><input type="checkbox"> 국가유공자</label><label><input type="checkbox"> 경력단절여성</label><label><input type="checkbox"> 고령자</label>
+            </div>
+          </div>
+        </fieldset>
+
+        <!-- ④ 접수방법 -->
+        <fieldset class="fset">
+          <legend>접수방법</legend>
+          <div class="frow" data-required>
+            <span class="frow__label">채용관련 문의처<em>*</em></span>
+            <div class="frow__field">
+              <input class="input input--auto" name="telno1" style="width:80px" aria-label="문의처 국번" value="031"> -
+              <input class="input input--auto" name="telno2" style="width:90px" aria-label="문의처 중간번호"> -
+              <input class="input input--auto" name="telno3" style="width:90px" aria-label="문의처 끝번호">
+              <p class="ferr"><i data-lucide="circle-alert"></i><span>문의처를 입력해주세요.</span></p>
+            </div>
+          </div>
+          <div class="frow" data-required>
+            <label class="frow__label" for="f-chgr">인사담당자 이름<em>*</em></label>
+            <div class="frow__field"><input id="f-chgr" name="chgrNm" class="input input--auto" style="width:200px" value="홍길동">
+              <p class="ferr"><i data-lucide="circle-alert"></i><span>담당자명을 입력해주세요.</span></p></div>
+          </div>
+          <div class="frow" data-required>
+            <span class="frow__label">접수기간<em>*</em></span>
+            <div class="frow__field">
+              <input class="input input--auto" type="date" name="rqtBgnDe" aria-label="접수 시작일"> ~
+              <input class="input input--auto" type="date" name="rqtEndDe" aria-label="접수 종료일">
+              <label class="choice"><input type="checkbox" name="recruitmentDeadlineYn"> 채용 시 마감</label><span class="xsmall muted">채용이 끝나면 접수기간 전이라도 마감합니다.</span>
+              <p class="ferr"><i data-lucide="circle-alert"></i><span>접수기간 시작·종료일자를 입력해주세요.</span></p>
+            </div>
+          </div>
+          <div class="frow">
+            <label class="frow__label" for="f-url">홈페이지 URL</label>
+            <div class="frow__field"><input id="f-url" name="homeUrl" class="input" placeholder="https://"></div>
+          </div>
+        </fieldset>
+
+        <!-- ⑤ 상세요강 -->
+        <fieldset class="fset">
+          <legend>상세요강</legend>
+          <div class="frow">
+            <span class="frow__label">템플릿</span>
+            <div class="frow__field choice"><label><input type="radio" name="templeteType" checked> 기본형</label><label><input type="radio" name="templeteType"> 표형</label><label><input type="radio" name="templeteType"> 직접입력</label></div>
+          </div>
+          <div class="frow">
+            <label class="frow__label" for="f-dtl">상세내용</label>
+            <div class="frow__field"><textarea id="f-dtl" name="dtlCnts" class="input" placeholder="담당업무, 자격요건, 근무환경 등을 입력하세요. (에디터 영역)"></textarea></div>
+          </div>
+        </fieldset>
+
+        <!-- ⑥ 사전질문 (FR-BZM-U12) : 문항별 질문 + 답변 최소·최대 글자수
+             운영 입사지원 폼(sprtFormNew.jsp:107-142)이 문항마다 data-lttrLimitBgn/End 로 글자수를 검사하므로 등록 시 함께 받는다(2026-10-01).
+             [개발] 질문 문구는 지원자 화면에 그대로 출력된다 — 출력 시 HTML 이스케이프 필수(기존 XSS 지적 sprtFormNew.jsp:101) -->
+        <fieldset class="fset">
+          <legend>사전질문</legend>
+          <p class="qa__guide">질문을 등록하면 구직자가 입사지원할 때 <b class="strong">반드시 답변</b>해야 합니다. 문항별로 답변 글자수 범위를 정해 주세요. 질문을 등록하지 않으면 입사지원 화면에 사전질문이 표시되지 않습니다.</p>
+          <div class="qa" id="qa-list">
+            <div class="qa__item">
+              <span class="qa__no">1</span>
+              <input class="input qa__q" name="bfQstn" placeholder="질문을 입력하세요" value="지원 동기를 알려주세요" aria-label="사전질문 1 내용">
+              <span class="qa__len">
+                <input class="input input--auto" type="number" name="lttrLimitBgn" min="0" value="10" aria-label="사전질문 1 최소 글자수"> ~
+                <input class="input input--auto" type="number" name="lttrLimitEnd" min="1" value="500" aria-label="사전질문 1 최대 글자수"> 자
+              </span>
+              <button type="button" class="btn btn--ghost btn--sm" data-remove=".qa__item">삭제</button>
+              <p class="qa__err"><i data-lucide="circle-alert"></i><span></span></p>
+            </div>
+          </div>
+          <button type="button" class="btn btn--outline btn--sm" style="margin-top:var(--sp-3)" data-qa-add="qa-list"><i data-lucide="plus"></i>질문 추가</button>
+        </fieldset>
+
+        <!-- ⑦ 제출서류 · 설정 -->
+        <fieldset class="fset">
+          <legend>제출서류 · 설정</legend>
+          <div class="frow">
+            <span class="frow__label">구직자 제출요청 서류</span>
+            <div class="frow__field choice"><label><input type="checkbox" checked> 이력서</label><label><input type="checkbox"> 자기소개서</label><label><input type="checkbox"> 포트폴리오</label><label><input type="checkbox"> 자격증 사본</label></div>
+          </div>
+          <div class="frow">
+            <span class="frow__label">채용공고 노출 여부</span>
+            <div class="frow__field choice"><label><input type="radio" name="useYn" checked> 노출</label><label><input type="radio" name="useYn"> 비노출</label><span class="xsmall muted">승인 후 노출 여부에 따라 게시됩니다.</span></div>
+          </div>
+          <div class="frow">
+            <span class="frow__label">인재추천 서비스</span>
+            <div class="frow__field choice"><label><input type="radio" name="recomYn" checked> 사용</label><label><input type="radio" name="recomYn"> 사용 안 함</label><span class="xsmall muted">사용 시 승인 후 공고별 추천 인재를 확인할 수 있습니다.</span></div>
+          </div>
+        </fieldset>
+
+        <!-- 버튼 : U10 등록(승인요청) · U11 승인 전 수정 — U13 미리보기는 제외 (2026-10-01 · 10-02 결정 B) -->
+        <div class="form-act">
+          <a class="btn btn--outline" href="bzm-recruit-list.html">취소</a>
+          <button type="submit" class="btn btn--primary"><span data-mode="new">저장 · 승인요청</span><span data-mode="edit">수정 · 승인요청</span></button>
+        </div>
+      </form>
+    </section>
+  </div>
+</main>
+
+<script>
+/* 수정 모드(?mode=edit) = 승인 전(승인대기·반려) 공고만 · 재공고(?mode=copy) = 게시 공고 내용을 불러와 새 공고로 등록 (FR-BZM-U11)
+   게시 중인 공고는 수정할 수 없다(2026-10-02 결정 A) */
+document.addEventListener("DOMContentLoaded",function(){
+  var mode=new URLSearchParams(location.search).get("mode");
+  if(mode!=="edit" && mode!=="copy") return;
+  var f=document.querySelector("form[data-validate]");
+  if(mode==="edit"){
+    f.setAttribute("data-done","수정되었습니다. 다시 승인을 요청했습니다.");
+    f.title.value="품질관리 신입사원 채용";
+    f.recrtPrsn.value="3명";
+    f.careerCd.selectedIndex=1; f.acdmcrCd.selectedIndex=2;
+    f.telno2.value="270"; f.telno3.value="9988";
+    f.rqtBgnDe.value="2026-10-01"; f.rqtEndDe.value="2026-10-15";
+    f.clCd1.selectedIndex=2;
+    return;
+  }
+  // 재공고 : 화면은 신규 등록과 같고 값만 채운다
+  document.getElementById("copy-note").hidden=false;
+  f.setAttribute("data-done","등록되었습니다. 관리자 승인 후 새 공고로 게시됩니다.");
+  f.title.value="반도체 공정기술 엔지니어 채용";
+  f.recrtPrsn.value="2명";
+  f.careerCd.selectedIndex=3; f.acdmcrCd.selectedIndex=4;
+  f.telno2.value="270"; f.telno3.value="9988";
+  f.clCd1.selectedIndex=1; f.clCd3.selectedIndex=1; f.clCd5.selectedIndex=1;
+  // 접수기간은 새로 입력받는다
+});
+</script>
+
+<div id="site-footer"></div>
+</body>
+</html>
