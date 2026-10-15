@@ -294,7 +294,7 @@ input[type=checkbox],input[type=radio]{accent-color:var(--c-ink);width:16px;heig
 .steps li.is-current::before{background:var(--c-ink);border-color:var(--c-ink);color:#fff;}
 
 /* 전형결과 3열 */
-.rslt{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--sp-3);}
+.rslt{display:grid;grid-template-columns:minmax(0,1fr);gap:var(--sp-3);}
 .rslt__col{border:1px solid var(--c-border);border-radius:var(--r-lg);padding:var(--sp-4);}
 .rslt__col h4{font-size:var(--fs-16);margin-bottom:var(--sp-3);display:flex;gap:var(--sp-2);align-items:center;}
 .rslt__col.is-current{border:2px solid var(--c-ink);}

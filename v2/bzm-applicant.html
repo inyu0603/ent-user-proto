@@ -47,31 +47,20 @@
         <span class="badge badge--strong"><i data-lucide="send"></i>경로 : 제안 (매칭 요청 후 입사지원)</span>
       </div>
 
-      <!-- ② 전형결과 처리 (FR-BZM-U22) : 공고 현재 단계(서류전형)만 활성 -->
+      <!-- ② 전형결과 처리 (FR-BZM-U22) : 전형단계 없이 결과 하나로 관리 -->
       <h2 class="h-sub">전형결과</h2>
       <div class="rslt">
-        <fieldset class="rslt__col is-current">
-          <legend class="sr-only">서류전형 결과</legend>
-          <h4>서류전형 <span class="badge badge--solid">현재 단계</span></h4>
+        <fieldset class="rslt__col">
+          <legend class="sr-only">전형결과</legend>
           <div class="choice">
-            <label><input type="radio" name="doc" checked> 미확인</label>
-            <label><input type="radio" name="doc"> 보류</label>
-            <label><input type="radio" name="doc"> 합격</label>
-            <label><input type="radio" name="doc"> 불합격</label>
+            <label><input type="radio" name="rslt" checked> 미확인</label>
+            <label><input type="radio" name="rslt"> 보류</label>
+            <label><input type="radio" name="rslt"> 합격</label>
+            <label><input type="radio" name="rslt"> 불합격</label>
           </div>
         </fieldset>
-        <fieldset class="rslt__col is-lock" disabled>
-          <legend class="sr-only">면접전형 결과 (비활성)</legend>
-          <h4>면접전형 <i data-lucide="lock"></i></h4>
-          <div class="choice"><label><input type="radio" name="itv" checked> 미확인</label><label><input type="radio" name="itv"> 보류</label><label><input type="radio" name="itv"> 합격</label><label><input type="radio" name="itv"> 불합격</label></div>
-        </fieldset>
-        <fieldset class="rslt__col is-lock" disabled>
-          <legend class="sr-only">최종결과 (비활성)</legend>
-          <h4>최종결과 <i data-lucide="lock"></i></h4>
-          <div class="choice"><label><input type="radio" name="fin" checked> 미확인</label><label><input type="radio" name="fin"> 보류</label><label><input type="radio" name="fin"> 합격</label><label><input type="radio" name="fin"> 불합격</label></div>
-        </fieldset>
       </div>
-      <p class="foot-note">서류 불합격 시 면접·최종 결과가 자동으로 불합격 처리됩니다. 면접 불합격 시 최종 결과가 자동으로 불합격 처리됩니다. 저장한 결과는 지원자 마이페이지에 바로 표시됩니다.</p>
+      <p class="foot-note">저장한 결과는 지원자 마이페이지에 바로 표시됩니다.</p>
       <div class="act" style="margin-top:var(--sp-3)">
         <button class="btn btn--primary btn--sm" type="button" data-confirm="전형결과를 저장하시겠습니까?&#10;지원자에게 결과가 통보됩니다. (지원자 마이페이지 입사지원 내역에 표시)" data-done="전형결과를 저장했습니다.">결과 저장</button>
       </div>
