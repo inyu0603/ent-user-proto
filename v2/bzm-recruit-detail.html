@@ -59,9 +59,7 @@
       <h2 class="h-sub">지원 현황</h2>
       <div class="stat-grid">
         <div class="stat"><div class="stat__num" id="d-sprt">0</div><div class="stat__label">지원자</div></div>
-        <div class="stat"><div class="stat__num" id="d-new">0</div><div class="stat__label">미열람</div></div>
-        <div class="stat"><div class="stat__num" id="d-step">-</div><div class="stat__label">현재 전형단계</div></div>
-      </div>
+        <div class="stat"><div class="stat__num" id="d-new">0</div><div class="stat__label">미열람</div></div>      </div>
       <div class="act" style="margin-top:var(--sp-3)">
         <a class="btn btn--outline btn--sm" id="d-go-sprt" href="bzm-applicants.html"><i data-lucide="users"></i>지원자 관리</a>
       </div>
@@ -108,8 +106,7 @@
            hidden:'<span class="badge badge--ghost"><i data-lucide="eye-off"></i>비노출</span>'};
     $("d-badges").innerHTML='<span class="badge">'+d.prog+'</span> '+B[d.aprv];
     ["cl","emp","prsn","area","acd","period","qa","use","hist"].forEach(function(k){ $("d-"+k).textContent=d[k]; });
-    $("d-sprt").textContent=d.sprt+"명"; $("d-new").textContent=d.neu+"명"; $("d-step").textContent=d.step;
-    if(!d.sprt){ var a=$("d-go-sprt"); a.setAttribute("aria-disabled","true"); a.removeAttribute("href"); }
+    $("d-sprt").textContent=d.sprt+"명"; $("d-new").textContent=d.neu+"명";    if(!d.sprt){ var a=$("d-go-sprt"); a.setAttribute("aria-disabled","true"); a.removeAttribute("href"); }
     var DEL='<button class="btn btn--ghost" type="button" data-confirm="이 공고를 삭제하시겠습니까?&#10;삭제는 접수 시작 전에만 할 수 있습니다." data-done="삭제되었습니다." data-go="bzm-recruit-list.html">삭제</button>';
     var REPOST='<button class="btn btn--primary" type="button" data-confirm="게시 중인 공고는 수정할 수 없습니다.&#10;이 공고 내용을 불러와 새 공고로 등록하시겠습니까?" data-go="bzm-recruit-form.html?mode=copy"><i data-lucide="copy"></i>재공고</button>';
     var G, A;
