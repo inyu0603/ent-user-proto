@@ -206,7 +206,7 @@ textarea.input{min-height:120px;resize:vertical;line-height:var(--lh-normal);}
 .note--strong{background:var(--c-bg);border:1px solid var(--c-ink);border-left-width:4px;color:var(--c-heading);}
 
 /* 상태별 건수 (클릭 필터) */
-.sum{display:grid;grid-template-columns:repeat(9,minmax(0,1fr));border:1px solid var(--c-border);border-radius:var(--r-lg);overflow:hidden;}
+.sum{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));border:1px solid var(--c-border);border-radius:var(--r-lg);overflow:hidden;}
 .sum button{padding:var(--sp-4) var(--sp-2);border:0;border-right:1px solid var(--c-border);background:var(--c-bg);cursor:pointer;text-align:center;}
 .sum button:last-child{border-right:0;}
 .sum button:hover{background:var(--c-bg-hover);}
@@ -355,12 +355,11 @@ input[type=checkbox],input[type=radio]{accent-color:var(--c-ink);width:16px;heig
   .lnb{position:static;display:flex;gap:var(--sp-1);overflow-x:auto;padding:var(--sp-2);}
   .lnb__title{display:none;}
   .lnb__link{white-space:nowrap;}
-  .sum{grid-template-columns:repeat(5,minmax(0,1fr));}
-  .sum button{border-bottom:1px solid var(--c-border);}
 }
 @media (max-width:768px){
   .page-head h1{font-size:var(--fs-24);}
   .sum{grid-template-columns:repeat(3,minmax(0,1fr));}
+  .sum button:nth-child(-n+3){border-bottom:1px solid var(--c-border);}
   .sum__div{border-left:0!important;}
   .frow,.modal__body .frow{grid-template-columns:1fr;}
   .frow__label{padding:var(--sp-2) var(--sp-3);}
