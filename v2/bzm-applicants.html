@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>잡아바 프로토타입 — 기업 마이페이지 · 지원자 목록</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/pds.css">
+<link rel="stylesheet" href="css/jb-header.css"><!-- 상단 헤더 : 디자인 정본 이식 -->
+<script src="https://unpkg.com/lucide@latest"></script>
+<script src="js/bzm-features.js"></script>
+<script src="js/bzm.js"></script>
+<script src="js/jb-header.js"></script>
+</head>
+<body data-user="biz-member">
+<div id="site-header"></div>
+
+<main class="container section">
+  <p class="crumb"><a href="../../03_화면설계/prototype/main-member-a.html">홈</a> › 기업 마이페이지 › 지원자 관리</p>
+
+  <!-- SCR-BZM-01 진입·권한 (FR-BZM-U29) -->
+  <div class="card ent-card">
+    <div class="ent-card__name"><i data-lucide="building-2"></i><strong class="strong">기업회원 | 잡아바기업</strong>
+      <span class="small muted">사업자번호 123-45-***** · 인사담당자 홍길동</span></div>
+    <span class="badge badge--strong"><i data-lucide="sparkles"></i>인재추천 서비스 이용 기업</span>
+  </div>
+
+  <div class="mp">
+    <nav class="lnb" aria-label="기업 마이페이지 메뉴">
+      <p class="lnb__title">기업 마이페이지</p>
+      <a class="lnb__link" href="bzm-recruit-list.html">채용공고 관리</a>
+      <a class="lnb__link" href="bzm-applicants.html" aria-current="page">지원자 관리</a>
+      <a class="lnb__link" href="bzm-talent.html">인재추천</a>
+    </nav>
+
+    <section aria-labelledby="pg-t">
+      <div class="page-head">
+        <h1 id="pg-t">지원자 관리</h1>
+      </div>
+
+      <!-- ① 공고 선택·요약 -->
+      <div class="card job-head">
+        <div>
+          <label class="job-head__pick">공고 선택
+            <select class="select" onchange="bzmToast('선택한 공고의 지원자로 전환합니다.')">
+              <option selected>반도체 공정기술 엔지니어 채용 (8명 · 미열람 3)</option>
+              <option>경력직 소프트웨어 개발자 채용 (11명)</option>
+              <option>기업지원사업 운영 담당자 채용 (4명)</option>
+              <option>생산직 사원 채용 (주간 고정) (23명)</option>
+            </select></label>
+          <p class="small muted" style="margin-top:6px">접수기간 2026-09-10 ~ 2026-10-02 · 지원자 <b class="strong">8명</b> (미열람 3명)</p>
+        </div>
+        <div class="act">
+          <button class="btn btn--outline btn--sm" type="button" data-toast="사용자 채용공고 상세를 새 창으로 엽니다."><i data-lucide="external-link"></i>공고보기</button>
+        </div>
+      </div>
+
+      <!-- ② 전형단계·일정 (FR-BZM-U18) -->
+      <div class="bar">
+        <h2 class="h-sub" style="margin:0">전형단계</h2>
+        <button class="btn btn--primary btn--sm" type="button" data-modal-open="m-step"><i data-lucide="calendar-clock"></i>일정 등록 · 단계 변경</button>
+      </div>
+      <ol class="steps" aria-label="전형단계 진행 현황">
+        <li class="is-done">접수중<small>~10.02</small></li>
+        <li class="is-current" aria-current="step">서류전형<small>10.06 발표 · 현재 단계</small></li>
+        <li>면접전형<small>10.13~10.15</small></li>
+        <li>결과발표<small>10.20</small></li>
+        <li>종료<small>임용 11.01</small></li>
+      </ol>
+
+      <!-- ③ 검색 (FR-BZM-U15) : 엑셀·사후관리·이메일 제거 -->
+      <form class="search" role="search" data-toast-submit="검색 조건을 적용했습니다.">
+        <label>전형단계<select class="select"><option>서류전형</option><option>면접전형</option><option>최종결과</option></select></label>
+        <label>합격 여부<select class="select"><option>전체</option><option>미확인</option><option>보류</option><option>합격</option><option>불합격</option></select></label>
+        <label>열람 여부<select class="select"><option>전체</option><option>미열람</option><option>열람</option></select></label>
+        <label>지원 상태<select class="select"><option>전체</option><option>지원</option><option>지원취소</option></select></label>
+        <div class="act"><button class="btn btn--primary btn--sm" type="submit"><i data-lucide="search"></i>검색</button></div>
+      </form>
+
+      <div class="bar">
+        <p class="small">총 <b class="strong">8</b>명 <span class="muted">(지원취소 1명 포함)</span></p>
+      </div>
+
+      <!-- ④ 목록 (FR-BZM-U14 · U16 · U17 · U19) : 나이 비표시(P-16) -->
+      <div class="table-wrap">
+        <table class="table">
+          <caption class="sr-only">지원자 목록</caption>
+          <thead><tr>
+            <th scope="col">NO</th><th scope="col">지원번호</th><th scope="col">성명</th><th scope="col">성별·나이</th><th scope="col">연락처</th><th scope="col">지원일</th>
+            <th scope="col">경로</th><th scope="col">서류</th><th scope="col">면접</th><th scope="col">최종</th><th scope="col">관심</th><th scope="col">이력서</th>
+          </tr></thead>
+          <tbody>
+            <tr class="is-unread"><td>8</td><td>S2609-0081</td><td><b class="strong">김민수</b> <span class="badge badge--solid">NEW</span></td><td>남 · 30세</td><td>010-****-1234</td><td>09.27</td><td><span class="badge badge--strong">제안</span></td><td><span class="badge">미확인</span></td><td>-</td><td>-</td><td><button class="star" type="button" aria-pressed="false" aria-label="관심 표시"><i data-lucide="star"></i></button></td><td><a class="btn btn--outline btn--sm" href="bzm-applicant.html">이력서보기</a></td></tr>
+            <tr class="is-unread"><td>7</td><td>S2609-0077</td><td><b class="strong">이서연</b> <span class="badge badge--solid">NEW</span></td><td>여 · 27세</td><td>010-****-5521</td><td>09.26</td><td>일반</td><td><span class="badge">미확인</span></td><td>-</td><td>-</td><td><button class="star" type="button" aria-pressed="false" aria-label="관심 표시"><i data-lucide="star"></i></button></td><td><a class="btn btn--outline btn--sm" href="bzm-applicant.html">이력서보기</a></td></tr>
+            <tr class="is-unread"><td>6</td><td>S2609-0070</td><td><b class="strong">박지훈</b> <span class="badge badge--solid">NEW</span></td><td>남 · 33세</td><td>010-****-8870</td><td>09.25</td><td>일반</td><td><span class="badge">미확인</span></td><td>-</td><td>-</td><td><button class="star" type="button" aria-pressed="false" aria-label="관심 표시"><i data-lucide="star"></i></button></td><td><a class="btn btn--outline btn--sm" href="bzm-applicant.html">이력서보기</a></td></tr>
+            <tr><td>5</td><td>S2609-0062</td><td>최유진</td><td>여 · 29세</td><td>010-****-3301</td><td>09.22</td><td>일반</td><td><b class="strong">합격</b></td><td>-</td><td>-</td><td><button class="star" type="button" aria-pressed="true" aria-label="관심 표시됨"><i data-lucide="star"></i></button></td><td><a class="btn btn--outline btn--sm" href="bzm-applicant.html">이력서보기</a></td></tr>
+            <tr><td>4</td><td>S2609-0055</td><td>정다은</td><td>여 · 26세</td><td>010-****-7712</td><td>09.19</td><td><span class="badge badge--strong">제안</span></td><td><b class="strong">합격</b></td><td>-</td><td>-</td><td><button class="star" type="button" aria-pressed="false" aria-label="관심 표시"><i data-lucide="star"></i></button></td><td><a class="btn btn--outline btn--sm" href="bzm-applicant.html">이력서보기</a></td></tr>
+            <tr><td>3</td><td>S2609-0041</td><td>한승우</td><td>남 · 35세</td><td>010-****-0098</td><td>09.15</td><td>일반</td><td class="muted">불합격</td><td class="muted">불합격</td><td class="muted">불합격</td><td><button class="star" type="button" aria-pressed="false" aria-label="관심 표시"><i data-lucide="star"></i></button></td><td><a class="btn btn--outline btn--sm" href="bzm-applicant.html">이력서보기</a></td></tr>
+            <tr class="is-cancel"><td>2</td><td>S2609-0033</td><td>윤하늘</td><td>여 · 28세</td><td class="muted">비공개</td><td>09.13</td><td>일반</td><td colspan="3"><span class="badge badge--ghost"><i data-lucide="circle-slash"></i>지원취소</span> <span class="xsmall muted">09.20 취소</span></td><td>-</td><td><button class="btn btn--outline btn--sm" type="button" disabled title="지원을 취소한 지원자의 이력서는 볼 수 없습니다">열람 불가</button></td></tr>
+            <tr><td>1</td><td>S2609-0012</td><td>강도현</td><td>남 · 31세</td><td>010-****-6654</td><td>09.11</td><td>일반</td><td class="muted">불합격</td><td class="muted">불합격</td><td class="muted">불합격</td><td><button class="star" type="button" aria-pressed="false" aria-label="관심 표시"><i data-lucide="star"></i></button></td><td><a class="btn btn--outline btn--sm" href="bzm-applicant.html">이력서보기</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <nav class="pager" aria-label="페이지"><a aria-current="page" href="#">1</a></nav>
+    </section>
+  </div>
+</main>
+
+<!-- 일정 등록·단계 변경 레이어 (FR-BZM-U18 · 원본 formSchedule / saveSchedule 규칙) -->
+<div class="modal" id="m-step" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="m-step-t">
+  <div class="modal__box">
+    <h2 id="m-step-t">일정 등록 · 단계 변경</h2>
+    <div class="modal__body">
+      <div class="frow"><span class="frow__label">현재 단계</span><div class="frow__field"><b class="strong">서류전형</b></div></div>
+      <div class="frow"><label class="frow__label" for="m-step-sel">변경할 단계</label><div class="frow__field"><select id="m-step-sel" class="select"><option>서류전형</option><option selected>면접전형</option><option>결과발표</option><option>종료</option></select></div></div>
+      <div class="frow"><span class="frow__label">서류 발표일</span><div class="frow__field"><input class="input input--auto" type="date" value="2026-10-06" aria-label="서류 발표일"></div></div>
+      <div class="frow"><span class="frow__label">면접일</span><div class="frow__field"><input class="input input--auto" type="date" value="2026-10-13" aria-label="면접 시작일"> ~ <input class="input input--auto" type="date" value="2026-10-15" aria-label="면접 종료일"></div></div>
+      <div class="frow"><span class="frow__label">합격자 발표일</span><div class="frow__field"><input class="input input--auto" type="date" value="2026-10-20" aria-label="합격자 발표일"></div></div>
+      <div class="frow"><span class="frow__label">임용일</span><div class="frow__field"><input class="input input--auto" type="date" value="2026-11-01" aria-label="임용일"></div></div>
+      <div class="note" style="margin:0"><i data-lucide="info"></i><span>이전 단계로는 변경할 수 없습니다. 현재 단계 결과가 <b>미확인</b>인 지원자가 있으면 다음 단계로 변경할 수 없습니다.</span></div>
+    </div>
+    <div class="modal__act">
+      <button class="btn btn--outline" type="button" data-modal-close>취소</button>
+      <button class="btn btn--primary" type="button" data-toast="서류전형 결과 미확인 입사지원자가 존재합니다. 합격상태를 변경해주세요.">저장</button>
+    </div>
+  </div>
+</div>
+
+<div id="site-footer"></div>
+</body>
+</html>
