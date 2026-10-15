@@ -32,7 +32,6 @@
       <p class="lnb__title">기업 마이페이지</p>
       <a class="lnb__link" href="bzm-recruit-list.html" aria-current="page">채용공고 관리</a>
       <a class="lnb__link" href="bzm-applicants.html">지원자 관리</a>
-      <a class="lnb__link" href="bzm-talent.html">인재추천</a>
     </nav>
 
     <section aria-labelledby="pg-t">
@@ -67,7 +66,6 @@
       </div>
       <div class="act" style="margin-top:var(--sp-3)">
         <a class="btn btn--outline btn--sm" id="d-go-sprt" href="bzm-applicants.html"><i data-lucide="users"></i>지원자 관리</a>
-        <a class="btn btn--outline btn--sm" id="d-go-talent" href="bzm-talent.html"><i data-lucide="sparkles"></i>추천 인재</a>
       </div>
 
       <!-- 공고 내용 (등록 화면 입력값 요약) -->
@@ -114,7 +112,6 @@
     ["cl","emp","prsn","area","acd","period","qa","use","hist"].forEach(function(k){ $("d-"+k).textContent=d[k]; });
     $("d-sprt").textContent=d.sprt+"명"; $("d-new").textContent=d.neu+"명"; $("d-step").textContent=d.step; $("d-recom").textContent=d.recom;
     if(!d.sprt){ var a=$("d-go-sprt"); a.setAttribute("aria-disabled","true"); a.removeAttribute("href"); }
-    if(!(d.recom==="Y" && (d.aprv==="posted"||d.aprv==="hidden"))){ var b=$("d-go-talent"); b.setAttribute("aria-disabled","true"); b.removeAttribute("href"); b.title="인재추천 사용 · 승인 공고만 이용 가능"; }
     var DEL='<button class="btn btn--ghost" type="button" data-confirm="이 공고를 삭제하시겠습니까?&#10;삭제는 접수 시작 전에만 할 수 있습니다." data-done="삭제되었습니다." data-go="bzm-recruit-list.html">삭제</button>';
     var REPOST='<button class="btn btn--primary" type="button" data-confirm="게시 중인 공고는 수정할 수 없습니다.&#10;이 공고 내용을 불러와 새 공고로 등록하시겠습니까?" data-go="bzm-recruit-form.html?mode=copy"><i data-lucide="copy"></i>재공고</button>';
     var G, A;
