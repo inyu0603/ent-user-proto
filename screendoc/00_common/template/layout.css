@@ -1,0 +1,211 @@
+/* ================================================================
+   화면설계서 골격 스타일 — 잡아바 UI/UX 개편
+   규격 : 폭 1920px 고정 · 세로 가변  (골격규격서.md §2)
+   금지 : 이 파일 밖에서 골격 요소에 인라인 style 을 쓰지 않는다.
+   ================================================================ */
+:root{
+  --page-w:1920px;
+  --page-margin:20px;
+  --page-pad:24px;
+  --col-gap:24px;
+  --col-left:1120px;      /* 화면 영역   (캡처 1440px → 배치 1120px, 배율 0.7778) */
+  --col-right:686px;      /* 디스크립션 영역 */
+  --cover-h:1340px;
+  --page-min:1080px;      /* 가변 페이지 세로 최소값 */
+
+  --c-ink:#1A1A1A;
+  --c-sub:#5A5A5A;
+  --c-line:#D5D5D5;
+  --c-line-strong:#333333;
+  --c-head-bg:#2E2E2E;
+  --c-head-fg:#FFFFFF;
+  --c-th-bg:#EFEFEF;
+  --c-blue:#1B6FE0;       /* 디자인·퍼블리싱 계열 */
+  --c-blue-soft:#E8F0FD;
+  --c-green:#2F7D4F;      /* 구성 블록 라벨 */
+  --c-green-soft:#E9F4ED;
+  --c-orange:#E8871E;     /* 기능 개발 계열 */
+  --c-orange-soft:#FDF0DF;
+
+  --font-title:"Paperlogy","Pretendard","Apple SD Gothic Neo",system-ui,sans-serif;
+  --font-body:"Pretendard","Noto Sans KR","Apple SD Gothic Neo",system-ui,sans-serif;
+
+  --fs-body:14px;
+  --fs-small:13px;
+  --fs-table:13px;
+}
+
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  background:#8A8A8A;
+  color:var(--c-ink);
+  font-family:var(--font-body);
+  font-size:var(--fs-body); line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* 타이틀 계열 — Paperlogy / 본문·표 — Pretendard (골격규격서 §4) */
+.cover__title, .cover__sub, .bar, .label, .tbl-title, .tbl-sub,
+.history caption, .desc caption{
+  font-family:var(--font-title);
+}
+
+/* ── 페이지 공통 ───────────────────────────────────────────── */
+.page{
+  width:var(--page-w);
+  margin:0 auto;
+  background:#FFFFFF;
+  position:relative;
+  page-break-after:always;
+  padding:var(--page-margin);
+  overflow:hidden;
+}
+.page__frame{
+  border:1px solid var(--c-line-strong);
+  padding:var(--page-pad);
+  min-height:100%;
+  height:100%;
+}
+.page--fixed{height:var(--cover-h);}
+.page--flow .page__frame{height:auto;
+  min-height:calc(var(--page-min) - var(--page-margin)*2 - 2px);}
+.page--flow{height:auto;min-height:var(--page-min);}
+.page--cover .page__frame{border:0;}
+
+/* ── ① 표지 ────────────────────────────────────────────────── */
+.cover{height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;}
+.cover__title{font-size:96px;font-weight:800;letter-spacing:-.02em;margin:0;}
+.cover__sub{font-size:48px;font-weight:700;margin:8px 0 0;}
+.cover__meta{margin-top:120px;border-collapse:collapse;font-size:20px;}
+.cover__meta th{background:var(--c-head-bg);color:var(--c-head-fg);font-weight:600;
+  padding:14px 28px;border:1px solid var(--c-line-strong);white-space:nowrap;}
+.cover__meta td{padding:14px 60px;border:1px solid var(--c-line-strong);text-align:center;}
+
+/* ── ② 변경이력 ────────────────────────────────────────────── */
+.history{width:100%;border-collapse:collapse;font-size:15px;}
+.history caption{
+  background:var(--c-head-bg);color:var(--c-head-fg);text-align:left;
+  font-weight:700;padding:10px 16px;font-size:16px;}
+.history th{background:var(--c-th-bg);border:1px solid var(--c-line);padding:9px 12px;font-weight:600;}
+.history td{border:1px solid var(--c-line);padding:9px 12px;}
+.history td.c{text-align:center;}
+.history th:nth-child(1),.history td:nth-child(1){width:90px;}
+.history th:nth-child(2),.history td:nth-child(2){width:150px;}
+.history th:nth-child(4),.history td:nth-child(4){width:120px;}
+.history th:nth-child(5),.history td:nth-child(5){width:160px;}
+
+/* ── ④ 화면설계 페이지 ─────────────────────────────────────── */
+.sheet{display:flex;gap:var(--col-gap);align-items:flex-start;}
+.sheet__left{width:var(--col-left);flex:0 0 var(--col-left);}
+.sheet__right{width:var(--col-right);flex:0 0 var(--col-right);}
+
+/* 검은 헤더바 */
+.bar{
+  background:var(--c-head-bg);color:var(--c-head-fg);
+  border-radius:8px;height:56px;display:flex;align-items:center;justify-content:center;
+  font-size:22px;font-weight:700;letter-spacing:-.01em;margin-bottom:22px;}
+
+/* 라벨 3종 */
+.label{display:inline-block;border-radius:16px;padding:6px 16px;
+  font-size:14px;font-weight:700;color:#fff;margin:0 0 12px;}
+.label--fr{background:var(--c-blue);}
+.label--block{background:var(--c-green);}
+
+/* 캡처 프레임 */
+.shot{position:relative;width:var(--col-left);margin:0 0 26px;}
+.shot img{display:block;width:100%;height:auto;border:1px solid var(--c-line);}
+.shot__cap{font-size:var(--fs-small);color:var(--c-sub);margin:6px 0 0;}
+
+/* 마커 배지 */
+.mk{
+  position:absolute;width:26px;height:26px;border-radius:50%;
+  color:#fff;font-size:13px;font-weight:700;line-height:26px;text-align:center;
+  box-shadow:0 0 0 2px #fff;}
+.mk--design{background:var(--c-blue);}
+.mk--dev{background:var(--c-orange);}
+
+/* 우측 메타테이블 */
+.meta{width:100%;border-collapse:collapse;font-size:var(--fs-table);margin-bottom:18px;}
+.meta th{background:var(--c-head-bg);color:var(--c-head-fg);font-weight:600;
+  padding:7px 10px;border:1px solid var(--c-line-strong);white-space:nowrap;width:78px;}
+.meta td{padding:7px 10px;border:1px solid var(--c-line-strong);text-align:center;}
+.meta td.l{text-align:left;}
+
+/* Description 2단표 */
+.desc{width:100%;border-collapse:collapse;font-size:var(--fs-table);margin-bottom:22px;}
+.desc caption{background:var(--c-head-bg);color:var(--c-head-fg);font-weight:700;
+  padding:7px 10px;font-size:14px;}
+.desc th{border:1px solid var(--c-line);padding:7px 10px;font-weight:600;
+  background:var(--c-th-bg);}
+.desc th.h-design{background:#4A6FA5;color:#fff;}
+.desc th.h-dev{background:#8A6A3A;color:#fff;}
+.desc td{border:1px solid var(--c-line);padding:7px 10px;vertical-align:top;}
+.desc td.no{width:26px;text-align:center;font-weight:700;color:#fff;}
+.desc td.no--design{background:var(--c-blue);}
+.desc td.no--dev{background:var(--c-orange);}
+.desc td.body{width:calc(50% - 26px);}
+/* 디자인/퍼블리싱 설명 칸 294px 고정(자동 배분 실측 173px × 1.7 · 2026-10-02) · 기능 개발 칸은 나머지 폭 + 긴 물리명 줄바꿈 */
+.desc td.no--design + td.body, .desc tr > td.muted:first-child + td.muted{width:294px;min-width:294px;max-width:294px;box-sizing:border-box;}
+.desc td.no--dev + td.body{width:auto;overflow-wrap:anywhere;}
+.desc .muted{background:#FAFAFA;}
+
+/* 초록 라벨 설명 블록 */
+.block{margin:0 0 22px;}
+.block ul{margin:0;padding-left:18px;}
+.block li{margin:0 0 5px;font-size:var(--fs-table);}
+.block table{width:100%;border-collapse:collapse;font-size:var(--fs-table);}
+.block th{background:var(--c-th-bg);border:1px solid var(--c-line);padding:6px 9px;
+  font-weight:600;text-align:left;}
+.block td{border:1px solid var(--c-line);padding:6px 9px;vertical-align:top;}
+
+/* 좌측 본문 서술 */
+.lead{font-size:15px;margin:0 0 14px;}
+.lead-list{margin:0 0 22px;padding-left:18px;}
+.lead-list li{font-size:var(--fs-table);color:var(--c-sub);margin:0 0 4px;}
+
+/* ── ③ 기능목록 표 페이지 ──────────────────────────────────── */
+.tbl-title{font-size:26px;font-weight:800;margin:0 0 18px;}
+.tbl{width:100%;border-collapse:collapse;font-size:var(--fs-table);}
+.tbl th{background:var(--c-th-bg);border:1px solid var(--c-line);padding:8px 10px;font-weight:600;}
+.tbl td{border:1px solid var(--c-line);padding:8px 10px;vertical-align:top;}
+.tbl-sub{font-size:18px;font-weight:700;margin:28px 0 12px;font-family:var(--font-title);}
+.tbl td.c{text-align:center;}
+/* 물리 연결점(테이블·컬럼)은 코드 서체로 구분한다 */
+.tbl td.phy{font-family:"SFMono-Regular",Consolas,"Liberation Mono",Menlo,monospace;
+  font-size:12px;letter-spacing:-.01em;word-break:break-all;}
+.tbl .unset{color:#9A9A9A;font-family:var(--font-body);font-size:12px;}
+.map col.w-cn{width:104px;} .map col.w-fr{width:92px;}
+.map th:nth-child(1),.map td:nth-child(1){width:104px;}
+.map th:nth-child(2),.map td:nth-child(2){width:92px;}
+.map th:nth-child(3),.map td:nth-child(3){width:140px;}
+.map th:nth-child(4),.map td:nth-child(4){width:74px;}
+.map th:nth-child(5),.map td:nth-child(5){width:168px;}
+.map th:nth-child(6),.map td:nth-child(6){width:158px;}
+.map th:nth-child(7),.map td:nth-child(7){width:158px;}
+.map th:nth-child(8),.map td:nth-child(8){width:96px;}
+.map th:nth-child(9),.map td:nth-child(9){width:58px;}
+.map th:nth-child(11),.map td:nth-child(11){width:88px;}
+.join th:nth-child(1),.join td:nth-child(1){width:104px;}
+.join th:nth-child(4),.join td:nth-child(4){width:88px;text-align:center;}
+.map-note{margin:0;padding-left:18px;font-size:var(--fs-table);}
+.map-note li{margin:0 0 4px;}
+
+/* ── 출력(PDF) ─────────────────────────────────────────────── */
+@media print{
+  body{background:#FFFFFF;}
+  .page{margin:0;}
+}
+
+/* ── 2026-10-02 스킬 개선 : FR 꼬리표 · 화면 목록 · 기능 목록 ── */
+.desc .fr-tag{display:inline-block;margin:0 0 4px;padding:1px 6px;border:1px solid var(--c-line);border-radius:3px;
+  font-family:"SFMono-Regular",Consolas,"Liberation Mono",Menlo,monospace;font-size:11px;color:#5A5A5A;background:#F6F6F6;}
+.tbl--toc td:nth-child(1),.tbl--toc td:nth-child(2){white-space:nowrap;}
+.tbl--toc th:nth-child(7),.tbl--toc td:nth-child(7){width:180px;}
+.tbl--feat th:nth-child(1){width:44px;}
+.tbl--feat th:nth-child(2){width:160px;}
+.tbl--feat th:nth-child(5),.tbl--feat th:nth-child(6){width:110px;}
+.tbl--feat th:nth-child(7){width:220px;}
+.shot-row{display:flex;gap:24px;align-items:flex-start;width:var(--col-left);}
+.shot-cell{flex:1 1 0;min-width:0;}
+.shot-row .shot{max-width:100%;}
