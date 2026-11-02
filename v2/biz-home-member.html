@@ -143,7 +143,7 @@
 
   function ym(off){
     var m = BASE.month - 1 + off;
-    return {year: BASE.year + Math.floor(m/12), month: (m%12)+1};
+    return {year: BASE.year + Math.floor(m/12), month: ((m%12)+12)%12+1};
   }
   function key(d){ return d.year + "-" + (d.month<10?"0":"") + d.month; }
   function esc(t){ var e=document.createElement("span"); e.textContent=t; return e.innerHTML; }
