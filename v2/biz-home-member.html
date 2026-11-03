@@ -79,7 +79,6 @@
   <section id="biz-member-calendar" class="biz-section">
     <div class="sub-head">
       <div><h2>맞춤 지원사업 일정</h2><p>기업정보와 관심 분야에 맞는 지원사업 일정을 모았습니다.</p></div>
-      <span class="biz-source">관심 분야 · 기술개발, 인력채용</span>
     </div>
     <div class="biz-calendar">
       <div class="biz-calendar__month">
@@ -116,16 +115,16 @@
   /* 샘플 데이터: 9월 3건, 10월 빈 상태, 11월(당월) 5건(스크롤 확인용) */
   var SCHEDULE = {
     "2026-09":[
-      ["09.03","접수 시작","스마트공장 구축 지원사업","관심 분야"],
-      ["09.15","접수 마감","중소기업 일학습병행 지원","채용계획 일치"],
-      ["09.24","접수 시작","수출기업 해외마케팅 지원","업종 일치"]
+      ["09.03","접수 시작","스마트공장 구축 지원사업"],
+      ["09.15","접수 마감","중소기업 일학습병행 지원"],
+      ["09.24","접수 시작","수출기업 해외마케팅 지원"]
     ],
     "2026-11":[
-      ["11.04","접수 시작","중소기업 근로환경 개선 지원","기업조건 일치"],
-      ["11.11","접수 마감","청년채용 인건비 지원사업","채용계획 일치"],
-      ["11.18","접수 마감","기술개발 사업화 자금 지원","관심 분야"],
-      ["11.25","접수 시작","소상공인 디지털 전환 지원","기업조건 일치"],
-      ["11.30","접수 마감","재직자 직무역량 향상 지원","업종 일치"]
+      ["11.04","접수 시작","중소기업 근로환경 개선 지원"],
+      ["11.11","접수 마감","청년채용 인건비 지원사업"],
+      ["11.18","접수 마감","기술개발 사업화 자금 지원"],
+      ["11.25","접수 시작","소상공인 디지털 전환 지원"],
+      ["11.30","접수 마감","재직자 직무역량 향상 지원"]
     ]
   };
 
@@ -153,7 +152,7 @@
     prev.disabled = offset <= MIN_OFFSET;
     next.disabled = offset >= MAX_OFFSET;
     list.innerHTML = items.length ? items.map(function(it){
-      return '<li><time datetime="'+d.year+'-'+it[0].replace(".","-")+'">'+it[0]+'</time><div><span class="badge">'+esc(it[1])+'</span><strong>'+esc(it[2])+'</strong><small>'+esc(it[3])+'</small></div></li>';
+      return '<li><time datetime="'+d.year+'-'+it[0].replace(".","-")+'">'+it[0]+'</time><div><span class="badge">'+esc(it[1])+'</span><strong>'+esc(it[2])+'</strong></div></li>';
     }).join("") : '<li class="biz-calendar__empty">해당 월에 맞춤 접수 일정이 없습니다.</li>';
     list.scrollTop = 0;
   }
