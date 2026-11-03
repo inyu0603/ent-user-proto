@@ -306,7 +306,7 @@ body:not([data-user="member"]) .ap-my-status{display:none;}
 .biz-calendar__list li:not(.biz-calendar__empty){position:relative;}
 .biz-calendar__list li:not(.biz-calendar__empty):hover{background:var(--neutral-surface);}
 .biz-calendar__link{color:inherit;}
-.biz-calendar__list .biz-calendar__dday{flex:none;margin-left:-4px;}
+.biz-calendar__list .biz-calendar__dday{flex:none;}
 .biz-calendar__list li.is-closed strong,.biz-calendar__list li.is-closed time{opacity:.5;}
 .biz-sort{display:inline-flex;align-items:center;flex:none;}
 .biz-sort__btn{padding:4px 2px;border:0;background:none;font-size:12px;color:var(--neutral-muted)!important;cursor:pointer;}
