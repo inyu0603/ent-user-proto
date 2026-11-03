@@ -306,6 +306,10 @@ body:not([data-user="member"]) .ap-my-status{display:none;}
 .biz-calendar__list li:not(.biz-calendar__empty){position:relative;}
 .biz-calendar__list li:not(.biz-calendar__empty):hover{background:var(--neutral-surface);}
 .biz-calendar__link{color:inherit;}
+.biz-sort{display:inline-flex;align-items:center;flex:none;}
+.biz-sort__btn{padding:4px 2px;border:0;background:none;font-size:12px;color:var(--neutral-muted)!important;cursor:pointer;}
+.biz-sort__btn+.biz-sort__btn::before{content:"";display:inline-block;width:1px;height:10px;margin:0 10px 0 8px;background:var(--neutral-border);vertical-align:-1px;}
+.biz-sort__btn[aria-pressed="true"]{font-weight:700;color:var(--neutral-text)!important;}
 .biz-calendar__link::after{content:"";position:absolute;inset:0;}
 .biz-calendar__link:hover{text-decoration:underline;}
 #apply-move-modal .modal__box p b{color:var(--neutral-text)!important;}

@@ -78,7 +78,8 @@
 
   <section id="biz-member-calendar" class="biz-section">
     <div class="sub-head">
-      <div><h2>맞춤 지원사업 일정</h2><p>기업정보와 관심 분야에 맞는 지원사업 일정을 모았습니다.</p></div>
+      <div><h2>기업 맞춤 지원사업 일정</h2><p>기업정보와 관심 분야에 맞는 지원사업 일정을 모았습니다.</p></div>
+      <div class="biz-sort" role="group" aria-label="일정 정렬"><button type="button" class="biz-sort__btn" data-biz-sort="deadline" aria-pressed="true">마감순</button><button type="button" class="biz-sort__btn" data-biz-sort="recent" aria-pressed="false">등록순</button></div>
     </div>
     <div class="biz-calendar">
       <div class="biz-calendar__month">
@@ -115,18 +116,19 @@
   var BASE = {year:2026, month:11};
   var TODAY = new Date(2026, 10, 3); /* 프로토타입 기준일 2026.11.03 (D-day 계산용) */
   /* 샘플 데이터: 9월 3건, 10월 빈 상태, 11월(당월) 5건(스크롤 확인용) */
+  /* 항목: [일자, 구분, 사업명, 등록 순번(클수록 최근 등록)] */
   var SCHEDULE = {
     "2026-09":[
-      ["09.03","접수 시작","스마트공장 구축 지원사업"],
-      ["09.15","접수 마감","중소기업 일학습병행 지원"],
-      ["09.24","접수 시작","수출기업 해외마케팅 지원"]
+      ["09.03","접수 시작","스마트공장 구축 지원사업",2],
+      ["09.15","접수 마감","중소기업 일학습병행 지원",1],
+      ["09.24","접수 시작","수출기업 해외마케팅 지원",3]
     ],
     "2026-11":[
-      ["11.04","접수 시작","중소기업 근로환경 개선 지원"],
-      ["11.11","접수 마감","청년채용 인건비 지원사업"],
-      ["11.18","접수 마감","기술개발 사업화 자금 지원"],
-      ["11.25","접수 시작","소상공인 디지털 전환 지원"],
-      ["11.30","접수 마감","재직자 직무역량 향상 지원"]
+      ["11.04","접수 시작","중소기업 근로환경 개선 지원",3],
+      ["11.11","접수 마감","청년채용 인건비 지원사업",5],
+      ["11.18","접수 마감","기술개발 사업화 자금 지원",1],
+      ["11.25","접수 시작","소상공인 디지털 전환 지원",4],
+      ["11.30","접수 마감","재직자 직무역량 향상 지원",2]
     ]
   };
 
@@ -137,6 +139,7 @@
   var monthEl = root.querySelector("[data-biz-cal-month]");
   var prev = root.querySelector("[data-biz-cal-prev]");
   var next = root.querySelector("[data-biz-cal-next]");
+  var sortMode = "deadline"; /* deadline = 마감순(일자 빠른 순), recent = 등록순(최근 등록 순) */
   var offset = 0; /* 0 = 당월, 음수 = 지난 달, 양수 = 다음 달 */
   var MIN_OFFSET = -12, MAX_OFFSET = 12; /* 전년도 동월 ~ 내년도 동월 */
 
@@ -156,7 +159,10 @@
   function esc(t){ var e=document.createElement("span"); e.textContent=t; return e.innerHTML; }
 
   function render(){
-    var d = ym(offset), items = SCHEDULE[key(d)] || [];
+    var d = ym(offset), items = (SCHEDULE[key(d)] || []).slice();
+    items.sort(sortMode === "recent"
+      ? function(a, b){ return b[3] - a[3]; }
+      : function(a, b){ return a[0] < b[0] ? -1 : a[0] > b[0] ? 1 : 0; });
     yearEl.textContent = d.year;
     monthEl.textContent = d.month + "월";
     prev.disabled = offset <= MIN_OFFSET;
@@ -192,6 +198,16 @@
       }
     });
   }
+
+  [].forEach.call(root.querySelectorAll("[data-biz-sort]"), function(btn){
+    btn.addEventListener("click", function(){
+      sortMode = btn.getAttribute("data-biz-sort");
+      [].forEach.call(root.querySelectorAll("[data-biz-sort]"), function(b){
+        b.setAttribute("aria-pressed", b === btn ? "true" : "false");
+      });
+      render();
+    });
+  });
 
   prev.addEventListener("click", function(){ if(offset>MIN_OFFSET){ offset--; render(); } });
   next.addEventListener("click", function(){ if(offset<MAX_OFFSET){ offset++; render(); } });
