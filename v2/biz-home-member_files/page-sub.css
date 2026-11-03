@@ -303,6 +303,12 @@ body:not([data-user="member"]) .ap-my-status{display:none;}
 .biz-calendar__list time{font-size:15px;font-weight:800;}
 .biz-calendar__list div{display:flex;min-width:0;align-items:center;gap:12px;}
 .biz-calendar__list strong{min-width:0;font-size:14px;}
+.biz-calendar__list li:not(.biz-calendar__empty){position:relative;}
+.biz-calendar__list li:not(.biz-calendar__empty):hover{background:var(--neutral-surface);}
+.biz-calendar__link{color:inherit;}
+.biz-calendar__link::after{content:"";position:absolute;inset:0;}
+.biz-calendar__link:hover{text-decoration:underline;}
+#apply-move-modal .modal__box p b{color:var(--neutral-text)!important;}
 .biz-calendar__list small{margin-left:auto;color:var(--neutral-muted)!important;white-space:nowrap;}
 .biz-calendar__notice{display:flex;align-items:center;gap:7px;margin:12px 0 0;font-size:11px;color:var(--neutral-muted)!important;}
 .biz-calendar__notice svg{width:15px;height:15px;flex:none;}
