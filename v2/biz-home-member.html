@@ -35,7 +35,7 @@
         <span>새로 접수된 지원자</span>
       </a>
       <a class="biz-stat biz-stat--link" href="#biz-member-calendar">
-        <b data-biz-interest-count>6건</b>
+        <b data-biz-interest-count>4건</b>
         <span>이번 달 관심 지원사업</span>
       </a>
     </div>
@@ -113,11 +113,11 @@
 <script>
 /* 기업 맞춤 지원사업 일정: 전년도 동월 ~ 내년도 동월 범위 이동 (프로토타입 기준 당월 = 2026년 11월)
    - 모든 날짜 기준은 마감일: D-day = 마감일 - 기준일, 마감 임박순 = 마감일 빠른 순
-   - 월 목록 = 신청기간이 해당 월에 걸쳐 있는 사업 */
+   - 월 목록 = 마감일이 해당 월인 사업 */
 (function(){
   var BASE = {year:2026, month:11};
   var TODAY = new Date(2026, 10, 3); /* 프로토타입 기준일 2026.11.03 */
-  /* 샘플 데이터: 9월 3건, 10월 빈 상태, 11월(당월) 6건(스크롤 확인용)
+  /* 샘플 데이터(마감일 기준): 9월 3건, 10월 빈 상태, 11월(당월) 4건, 12월 2건
      항목: [신청 시작일, 마감일, 사업명, 등록 순번(클수록 최근 등록)] */
   var PROGRAMS = [
     ["2026-08-25","2026-09-15","중소기업 일학습병행 지원",1],
@@ -150,10 +150,10 @@
   function mmdd(s){ return s.slice(5).replace("-", "."); }
   function esc(t){ var e=document.createElement("span"); e.textContent=t; return e.innerHTML; }
 
-  /* 신청기간이 해당 월에 걸쳐 있는 사업 */
+  /* 마감일이 해당 월인 사업 */
   function programsOf(d){
-    var first = new Date(d.year, d.month-1, 1), last = new Date(d.year, d.month, 0);
-    return PROGRAMS.filter(function(p){ return toDate(p[0]) <= last && toDate(p[1]) >= first; });
+    var prefix = d.year + "-" + (d.month<10?"0":"") + d.month + "-";
+    return PROGRAMS.filter(function(p){ return p[1].indexOf(prefix) === 0; });
   }
   /* 상태·D-day: 모두 마감일 기준 */
   function status(p){
