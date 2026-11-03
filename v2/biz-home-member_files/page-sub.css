@@ -314,11 +314,12 @@ body:not([data-user="member"]) .ap-my-status{display:none;}
 .biz-sort__btn[aria-pressed="true"]{font-weight:700;color:var(--neutral-text)!important;}
 .biz-calendar__link::after{content:"";position:absolute;inset:0;}
 .biz-calendar__link:hover{text-decoration:underline;}
-#apply-move-modal .modal__box p b{color:var(--neutral-text)!important;}
+.biz-toast{position:fixed;left:50%;bottom:32px;z-index:100;transform:translate(-50%,20px);opacity:0;pointer-events:none;padding:12px 20px;border-radius:8px;background:#1f1f1f;color:#fff!important;font-size:14px;box-shadow:0 8px 24px rgba(0,0,0,.18);transition:all .2s;max-width:calc(100% - 32px);}
+.biz-toast.is-on{opacity:1;transform:translate(-50%,0);}
 .biz-calendar__list small{margin-left:auto;color:var(--neutral-muted)!important;white-space:nowrap;}
 .biz-calendar__notice{display:flex;align-items:center;gap:7px;margin:12px 0 0;font-size:11px;color:var(--neutral-muted)!important;}
 .biz-calendar__notice svg{width:15px;height:15px;flex:none;}
-.biz-contact .std-foot__grid{grid-template-columns:repeat(3,1fr);}
+.biz-contact .std-foot__grid{grid-template-columns:repeat(2,1fr);}
 .biz-dashboard{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
 .biz-dash{display:flex;min-height:150px;flex-direction:column;padding:22px;border:1px solid var(--neutral-border);border-radius:10px;background:#fff;}
 .biz-dash:hover{background:var(--neutral-surface);}
