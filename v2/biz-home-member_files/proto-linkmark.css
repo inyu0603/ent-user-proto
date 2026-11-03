@@ -34,3 +34,9 @@ body:not(.idx-body) a.btn--primary:is([href$=".html"],[href*=".html#"],[href*=".
 body:not(.idx-body) nav.gnb a.gnb__sub-item:is([href$=".html"],[href*=".html#"],[href*=".html?"]){
   color:var(--neutral-text)!important;
 }
+
+/* 기업서비스 홈 상단 통계 박스는 링크여도 기존 색을 유지한다. */
+body:not(.idx-body) a.biz-stat:is([href$=".html"],[href*=".html#"],[href*=".html?"]),
+body:not(.idx-body) a.biz-stat:is([href$=".html"],[href*=".html#"],[href*=".html?"]) b{
+  color:var(--neutral-text)!important;
+}
