@@ -180,7 +180,7 @@
       var st = status(p);
       return '<li'+(st.closed?' class="is-closed"':'')+'><time datetime="'+p[0]+'" title="신청일">'+mmdd(p[0])+'</time><div><span class="badge">'+st.badge+'</span>'+
         '<strong><a class="biz-calendar__link" href="#" data-apply-move data-title="'+esc(p[2])+'">'+esc(p[2])+'</a></strong>'+
-        '<small class="biz-calendar__period">신청기간 '+mmdd(p[0])+' ~ '+mmdd(p[1])+'</small>'+
+        '<small class="biz-calendar__period">'+mmdd(p[0])+' ~ '+mmdd(p[1])+'</small>'+
         '<span class="badge biz-calendar__dday">'+st.dday+'</span></div></li>';
     }).join("") : '<li class="biz-calendar__empty">해당 월에 맞춤 접수 일정이 없습니다.</li>';
     list.scrollTop = 0;
